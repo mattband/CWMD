@@ -23,22 +23,22 @@ public class NewsPaperDeliverySystem {
             // If no exception is thrown, the connection was successful
             System.out.println("Connected to the database!");
             
-            Statement stmt = conn.createStatement();
-            String sql = "SELECT * FROM CUSTOMER";
-            ResultSet resultset = stmt.executeQuery(sql);
-            
-            while(resultset.next()){
-                int customerId = resultset.getInt("CustomerId");
-                String customerName = resultset.getString("Name");
-                String customerAddress = resultset.getString("Address");
-                String customerPhoneNumber = resultset.getString("PhoneNumber");
-                
-                System.out.println("Customer id: " + customerId);
-                System.out.println("Customer Name: " + customerName);
-                System.out.println("Customer Address: " + customerAddress);
-                System.out.println("Customer phone Number: " + customerPhoneNumber);
-                
-            }
+//            Statement stmt = conn.createStatement();
+//            String sql = "SELECT * FROM CUSTOMER";
+//            ResultSet resultset = stmt.executeQuery(sql);
+//            
+//            while(resultset.next()){
+//                int customerId = resultset.getInt("CustomerId");
+//                String customerName = resultset.getString("Name");
+//                String customerAddress = resultset.getString("Address");
+//                String customerPhoneNumber = resultset.getString("PhoneNumber");
+//                
+//                System.out.println("Customer id: " + customerId);
+//                System.out.println("Customer Name: " + customerName);
+//                System.out.println("Customer Address: " + customerAddress);
+//                System.out.println("Customer phone Number: " + customerPhoneNumber);
+//                
+//            }
                 
         
         } catch (SQLException e) {
