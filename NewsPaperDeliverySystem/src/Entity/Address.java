@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Address.findByAddressid", query = "SELECT a FROM Address a WHERE a.addressid = :addressid"),
     @NamedQuery(name = "Address.findByStreet", query = "SELECT a FROM Address a WHERE a.street = :street"),
     @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city"),
-    @NamedQuery(name = "Address.findByEircode", query = "SELECT a FROM Address a WHERE a.eircode = :eircode")})
+    @NamedQuery(name = "Address.findByEircode", query = "SELECT a FROM Address a WHERE a.eircode = :eircode"),
+    @NamedQuery(name = "Address.findByArea", query = "SELECT a FROM Address a WHERE a.area = :area")})
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,12 +41,18 @@ public class Address implements Serializable {
     @Basic(optional = false)
     @Column(name = "ADDRESSID")
     private Integer addressid;
+    @Basic(optional = false)
     @Column(name = "STREET")
     private String street;
+    @Basic(optional = false)
     @Column(name = "CITY")
     private String city;
+    @Basic(optional = false)
     @Column(name = "EIRCODE")
     private String eircode;
+    @Basic(optional = false)
+    @Column(name = "AREA")
+    private String area;
     @OneToMany(mappedBy = "addressid")
     private Collection<Customer> customerCollection;
 
@@ -54,6 +61,14 @@ public class Address implements Serializable {
 
     public Address(Integer addressid) {
         this.addressid = addressid;
+    }
+
+    public Address(Integer addressid, String street, String city, String eircode, String area) {
+        this.addressid = addressid;
+        this.street = street;
+        this.city = city;
+        this.eircode = eircode;
+        this.area = area;
     }
 
     public Integer getAddressid() {
@@ -86,6 +101,14 @@ public class Address implements Serializable {
 
     public void setEircode(String eircode) {
         this.eircode = eircode;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     @XmlTransient

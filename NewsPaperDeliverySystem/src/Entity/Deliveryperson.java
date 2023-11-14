@@ -9,6 +9,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Deliveryperson.findAll", query = "SELECT d FROM Deliveryperson d"),
     @NamedQuery(name = "Deliveryperson.findByDeliverymanid", query = "SELECT d FROM Deliveryperson d WHERE d.deliverymanid = :deliverymanid"),
-    @NamedQuery(name = "Deliveryperson.findByDeliverydocket", query = "SELECT d FROM Deliveryperson d WHERE d.deliverydocket = :deliverydocket"),
+    @NamedQuery(name = "Deliveryperson.findByDeliveryphonenumber", query = "SELECT d FROM Deliveryperson d WHERE d.deliveryphonenumber = :deliveryphonenumber"),
     @NamedQuery(name = "Deliveryperson.findByArea", query = "SELECT d FROM Deliveryperson d WHERE d.area = :area")})
 public class Deliveryperson implements Serializable {
 
@@ -34,11 +36,17 @@ public class Deliveryperson implements Serializable {
     @Column(name = "DELIVERYMANID")
     private String deliverymanid;
     @Basic(optional = false)
-    @Column(name = "DELIVERYDOCKET")
-    private String deliverydocket;
+    @Column(name = "DELIVERYPHONENUMBER")
+    private String deliveryphonenumber;
     @Basic(optional = false)
     @Column(name = "AREA")
     private String area;
+    @JoinColumn(name = "DELIVERYDOCKET", referencedColumnName = "DELIVERYDOCKETID")
+    @ManyToOne
+    private Deliverydocket deliverydocket;
+    @JoinColumn(name = "USERID", referencedColumnName = "USERID")
+    @ManyToOne
+    private Users userid;
 
     public Deliveryperson() {
     }
@@ -47,9 +55,9 @@ public class Deliveryperson implements Serializable {
         this.deliverymanid = deliverymanid;
     }
 
-    public Deliveryperson(String deliverymanid, String deliverydocket, String area) {
+    public Deliveryperson(String deliverymanid, String deliveryphonenumber, String area) {
         this.deliverymanid = deliverymanid;
-        this.deliverydocket = deliverydocket;
+        this.deliveryphonenumber = deliveryphonenumber;
         this.area = area;
     }
 
@@ -61,12 +69,12 @@ public class Deliveryperson implements Serializable {
         this.deliverymanid = deliverymanid;
     }
 
-    public String getDeliverydocket() {
-        return deliverydocket;
+    public String getDeliveryphonenumber() {
+        return deliveryphonenumber;
     }
 
-    public void setDeliverydocket(String deliverydocket) {
-        this.deliverydocket = deliverydocket;
+    public void setDeliveryphonenumber(String deliveryphonenumber) {
+        this.deliveryphonenumber = deliveryphonenumber;
     }
 
     public String getArea() {
@@ -75,6 +83,22 @@ public class Deliveryperson implements Serializable {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public Deliverydocket getDeliverydocket() {
+        return deliverydocket;
+    }
+
+    public void setDeliverydocket(Deliverydocket deliverydocket) {
+        this.deliverydocket = deliverydocket;
+    }
+
+    public Users getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Users userid) {
+        this.userid = userid;
     }
 
     @Override

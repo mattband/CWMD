@@ -9,6 +9,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,8 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Newsagent.findAll", query = "SELECT n FROM Newsagent n"),
-    @NamedQuery(name = "Newsagent.findByAgentid", query = "SELECT n FROM Newsagent n WHERE n.agentid = :agentid"),
-    @NamedQuery(name = "Newsagent.findByAgentpassword", query = "SELECT n FROM Newsagent n WHERE n.agentpassword = :agentpassword")})
+    @NamedQuery(name = "Newsagent.findByAgentid", query = "SELECT n FROM Newsagent n WHERE n.agentid = :agentid")})
 public class Newsagent implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,20 +33,15 @@ public class Newsagent implements Serializable {
     @Basic(optional = false)
     @Column(name = "AGENTID")
     private String agentid;
-    @Basic(optional = false)
-    @Column(name = "AGENTPASSWORD")
-    private String agentpassword;
+    @JoinColumn(name = "USERID", referencedColumnName = "USERID")
+    @ManyToOne
+    private Users userid;
 
     public Newsagent() {
     }
 
     public Newsagent(String agentid) {
         this.agentid = agentid;
-    }
-
-    public Newsagent(String agentid, String agentpassword) {
-        this.agentid = agentid;
-        this.agentpassword = agentpassword;
     }
 
     public String getAgentid() {
@@ -56,12 +52,12 @@ public class Newsagent implements Serializable {
         this.agentid = agentid;
     }
 
-    public String getAgentpassword() {
-        return agentpassword;
+    public Users getUserid() {
+        return userid;
     }
 
-    public void setAgentpassword(String agentpassword) {
-        this.agentpassword = agentpassword;
+    public void setUserid(Users userid) {
+        this.userid = userid;
     }
 
     @Override

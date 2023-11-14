@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author User
  */
 @Entity
-@Table(name = "CUSTOMER_ORDER")
+@Table(name = "ORDERBOOK")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CustomerOrder.findAll", query = "SELECT c FROM CustomerOrder c"),
-    @NamedQuery(name = "CustomerOrder.findByOrderid", query = "SELECT c FROM CustomerOrder c WHERE c.orderid = :orderid"),
-    @NamedQuery(name = "CustomerOrder.findByOrderdate", query = "SELECT c FROM CustomerOrder c WHERE c.orderdate = :orderdate"),
-    @NamedQuery(name = "CustomerOrder.findByTotalamount", query = "SELECT c FROM CustomerOrder c WHERE c.totalamount = :totalamount")})
-public class CustomerOrder implements Serializable {
+    @NamedQuery(name = "Orderbook.findAll", query = "SELECT o FROM Orderbook o"),
+    @NamedQuery(name = "Orderbook.findByOrderid", query = "SELECT o FROM Orderbook o WHERE o.orderid = :orderid"),
+    @NamedQuery(name = "Orderbook.findByOrderdate", query = "SELECT o FROM Orderbook o WHERE o.orderdate = :orderdate"),
+    @NamedQuery(name = "Orderbook.findByTotalamount", query = "SELECT o FROM Orderbook o WHERE o.totalamount = :totalamount")})
+public class Orderbook implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,11 +55,13 @@ public class CustomerOrder implements Serializable {
     private Publication publicationid;
     @OneToMany(mappedBy = "orderid")
     private Collection<Invoice> invoiceCollection;
+    @OneToMany(mappedBy = "orderid")
+    private Collection<Deliverydocket> deliverydocketCollection;
 
-    public CustomerOrder() {
+    public Orderbook() {
     }
 
-    public CustomerOrder(String orderid) {
+    public Orderbook(String orderid) {
         this.orderid = orderid;
     }
 
@@ -112,6 +114,15 @@ public class CustomerOrder implements Serializable {
         this.invoiceCollection = invoiceCollection;
     }
 
+    @XmlTransient
+    public Collection<Deliverydocket> getDeliverydocketCollection() {
+        return deliverydocketCollection;
+    }
+
+    public void setDeliverydocketCollection(Collection<Deliverydocket> deliverydocketCollection) {
+        this.deliverydocketCollection = deliverydocketCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -122,10 +133,10 @@ public class CustomerOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CustomerOrder)) {
+        if (!(object instanceof Orderbook)) {
             return false;
         }
-        CustomerOrder other = (CustomerOrder) object;
+        Orderbook other = (Orderbook) object;
         if ((this.orderid == null && other.orderid != null) || (this.orderid != null && !this.orderid.equals(other.orderid))) {
             return false;
         }
@@ -134,7 +145,7 @@ public class CustomerOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.CustomerOrder[ orderid=" + orderid + " ]";
+        return "Entity.Orderbook[ orderid=" + orderid + " ]";
     }
     
 }

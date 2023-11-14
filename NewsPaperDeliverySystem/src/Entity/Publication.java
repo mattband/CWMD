@@ -54,11 +54,13 @@ public class Publication implements Serializable {
     @Column(name = "FREQUENCY")
     private String frequency;
     @OneToMany(mappedBy = "publicationid")
-    private Collection<CustomerOrder> customerOrderCollection;
+    private Collection<Orderbook> orderbookCollection;
     @OneToMany(mappedBy = "publication")
     private Collection<Customer> customerCollection;
     @OneToMany(mappedBy = "publicationid")
     private Collection<Invoice> invoiceCollection;
+    @OneToMany(mappedBy = "publicationid")
+    private Collection<Deliverydocket> deliverydocketCollection;
 
     public Publication() {
     }
@@ -116,12 +118,12 @@ public class Publication implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CustomerOrder> getCustomerOrderCollection() {
-        return customerOrderCollection;
+    public Collection<Orderbook> getOrderbookCollection() {
+        return orderbookCollection;
     }
 
-    public void setCustomerOrderCollection(Collection<CustomerOrder> customerOrderCollection) {
-        this.customerOrderCollection = customerOrderCollection;
+    public void setOrderbookCollection(Collection<Orderbook> orderbookCollection) {
+        this.orderbookCollection = orderbookCollection;
     }
 
     @XmlTransient
@@ -140,6 +142,15 @@ public class Publication implements Serializable {
 
     public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
         this.invoiceCollection = invoiceCollection;
+    }
+
+    @XmlTransient
+    public Collection<Deliverydocket> getDeliverydocketCollection() {
+        return deliverydocketCollection;
+    }
+
+    public void setDeliverydocketCollection(Collection<Deliverydocket> deliverydocketCollection) {
+        this.deliverydocketCollection = deliverydocketCollection;
     }
 
     @Override

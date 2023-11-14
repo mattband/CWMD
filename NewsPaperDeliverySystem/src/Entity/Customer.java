@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
     @NamedQuery(name = "Customer.findByCustomerid", query = "SELECT c FROM Customer c WHERE c.customerid = :customerid"),
+    @NamedQuery(name = "Customer.findByCustomername", query = "SELECT c FROM Customer c WHERE c.customername = :customername"),
     @NamedQuery(name = "Customer.findByPhonenumber", query = "SELECT c FROM Customer c WHERE c.phonenumber = :phonenumber"),
     @NamedQuery(name = "Customer.findBySchedule", query = "SELECT c FROM Customer c WHERE c.schedule = :schedule")})
 public class Customer implements Serializable {
@@ -38,12 +39,15 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @Column(name = "CUSTOMERID")
     private String customerid;
+    @Basic(optional = false)
+    @Column(name = "CUSTOMERNAME")
+    private String customername;
     @Column(name = "PHONENUMBER")
     private String phonenumber;
     @Column(name = "SCHEDULE")
     private String schedule;
     @OneToMany(mappedBy = "customerid")
-    private Collection<CustomerOrder> customerOrderCollection;
+    private Collection<Orderbook> orderbookCollection;
     @JoinColumn(name = "ADDRESSID", referencedColumnName = "ADDRESSID")
     @ManyToOne
     private Address addressid;
@@ -52,6 +56,8 @@ public class Customer implements Serializable {
     private Publication publication;
     @OneToMany(mappedBy = "customerid")
     private Collection<Invoice> invoiceCollection;
+    @OneToMany(mappedBy = "customerid")
+    private Collection<Deliverydocket> deliverydocketCollection;
 
     public Customer() {
     }
@@ -60,12 +66,25 @@ public class Customer implements Serializable {
         this.customerid = customerid;
     }
 
+    public Customer(String customerid, String customername) {
+        this.customerid = customerid;
+        this.customername = customername;
+    }
+
     public String getCustomerid() {
         return customerid;
     }
 
     public void setCustomerid(String customerid) {
         this.customerid = customerid;
+    }
+
+    public String getCustomername() {
+        return customername;
+    }
+
+    public void setCustomername(String customername) {
+        this.customername = customername;
     }
 
     public String getPhonenumber() {
@@ -85,12 +104,12 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CustomerOrder> getCustomerOrderCollection() {
-        return customerOrderCollection;
+    public Collection<Orderbook> getOrderbookCollection() {
+        return orderbookCollection;
     }
 
-    public void setCustomerOrderCollection(Collection<CustomerOrder> customerOrderCollection) {
-        this.customerOrderCollection = customerOrderCollection;
+    public void setOrderbookCollection(Collection<Orderbook> orderbookCollection) {
+        this.orderbookCollection = orderbookCollection;
     }
 
     public Address getAddressid() {
@@ -116,6 +135,15 @@ public class Customer implements Serializable {
 
     public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
         this.invoiceCollection = invoiceCollection;
+    }
+
+    @XmlTransient
+    public Collection<Deliverydocket> getDeliverydocketCollection() {
+        return deliverydocketCollection;
+    }
+
+    public void setDeliverydocketCollection(Collection<Deliverydocket> deliverydocketCollection) {
+        this.deliverydocketCollection = deliverydocketCollection;
     }
 
     @Override

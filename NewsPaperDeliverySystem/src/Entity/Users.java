@@ -5,6 +5,7 @@
 package Entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +45,10 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "PASSWORD")
     private String password;
+    @OneToMany(mappedBy = "userid")
+    private Collection<Newsagent> newsagentCollection;
+    @OneToMany(mappedBy = "userid")
+    private Collection<Deliveryperson> deliverypersonCollection;
 
     public Users() {
     }
@@ -78,6 +85,24 @@ public class Users implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @XmlTransient
+    public Collection<Newsagent> getNewsagentCollection() {
+        return newsagentCollection;
+    }
+
+    public void setNewsagentCollection(Collection<Newsagent> newsagentCollection) {
+        this.newsagentCollection = newsagentCollection;
+    }
+
+    @XmlTransient
+    public Collection<Deliveryperson> getDeliverypersonCollection() {
+        return deliverypersonCollection;
+    }
+
+    public void setDeliverypersonCollection(Collection<Deliveryperson> deliverypersonCollection) {
+        this.deliverypersonCollection = deliverypersonCollection;
     }
 
     @Override

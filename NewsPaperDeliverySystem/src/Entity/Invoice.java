@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
-    @NamedQuery(name = "Invoice.findByInvoiceid", query = "SELECT i FROM Invoice i WHERE i.invoiceid = :invoiceid")})
+    @NamedQuery(name = "Invoice.findByInvoiceid", query = "SELECT i FROM Invoice i WHERE i.invoiceid = :invoiceid"),
+    @NamedQuery(name = "Invoice.findByTotalamount", query = "SELECT i FROM Invoice i WHERE i.totalamount = :totalamount")})
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,12 +37,15 @@ public class Invoice implements Serializable {
     @Basic(optional = false)
     @Column(name = "INVOICEID")
     private Integer invoiceid;
+    @Basic(optional = false)
+    @Column(name = "TOTALAMOUNT")
+    private double totalamount;
     @JoinColumn(name = "CUSTOMERID", referencedColumnName = "CUSTOMERID")
     @ManyToOne
     private Customer customerid;
     @JoinColumn(name = "ORDERID", referencedColumnName = "ORDERID")
     @ManyToOne
-    private CustomerOrder orderid;
+    private Orderbook orderid;
     @JoinColumn(name = "PUBLICATIONID", referencedColumnName = "PUBLICATIONID")
     @ManyToOne
     private Publication publicationid;
@@ -53,12 +57,25 @@ public class Invoice implements Serializable {
         this.invoiceid = invoiceid;
     }
 
+    public Invoice(Integer invoiceid, double totalamount) {
+        this.invoiceid = invoiceid;
+        this.totalamount = totalamount;
+    }
+
     public Integer getInvoiceid() {
         return invoiceid;
     }
 
     public void setInvoiceid(Integer invoiceid) {
         this.invoiceid = invoiceid;
+    }
+
+    public double getTotalamount() {
+        return totalamount;
+    }
+
+    public void setTotalamount(double totalamount) {
+        this.totalamount = totalamount;
     }
 
     public Customer getCustomerid() {
@@ -69,11 +86,11 @@ public class Invoice implements Serializable {
         this.customerid = customerid;
     }
 
-    public CustomerOrder getOrderid() {
+    public Orderbook getOrderid() {
         return orderid;
     }
 
-    public void setOrderid(CustomerOrder orderid) {
+    public void setOrderid(Orderbook orderid) {
         this.orderid = orderid;
     }
 

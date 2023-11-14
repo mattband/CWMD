@@ -10,6 +10,8 @@
     <class>Entity.CustomerOrder</class>
     <class>Entity.Publication</class>
     <class>Entity.Deliveryperson</class>
+    <class>Entity.Orderbook</class>
+    <class>Entity.Deliverydocket</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/NewsPaperDeliverySystem"/>
       <property name="javax.persistence.jdbc.user" value="nbuser"/>
