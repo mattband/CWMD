@@ -1,10 +1,4 @@
-
-package orderBook_Matt;
-
-/**
- *
- * @author matth
- */
+package matthew;
 // project exception handeler. no need to create other.
 	public class NewsAgentExceptionHandler extends Exception{
 	    
@@ -17,4 +11,6 @@ package orderBook_Matt;
 		
 		public String getMessage() {
 			return message;
-		}}
+		}
+}
+	
