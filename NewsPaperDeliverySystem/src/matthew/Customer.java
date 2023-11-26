@@ -83,7 +83,7 @@ public class Customer {
 	// method that will check if validate that the customerID is valid
 	public static boolean validateCustomerID(String customerID) throws NewsAgentExceptionHandler {
 	    // Check if customerID is empty
-	    if (customerID.isBlank() || customerID.isEmpty()) {
+	    if (customerID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid customerID.");
 	    }
 
@@ -109,7 +109,7 @@ public class Customer {
 	// method that will check if validate that the publicationID is valid	
 	public static boolean validatePublicationID(String publicationID) throws NewsAgentExceptionHandler {
 	    // Check if publicationID is empty
-	    if (publicationID.isBlank() || publicationID.isEmpty()) {
+	    if ( publicationID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid publicationID.");
 	    }
 
@@ -134,7 +134,7 @@ public class Customer {
 	// method that will check if validate that the customerName is valid	
 	public static boolean validateCustomerName(String customerName) throws NewsAgentExceptionHandler {
 	    // Check if customerName is empty
-	    if (customerName.isBlank() || customerName.isEmpty()) {
+	    if ( customerName.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid customerName.");
 	    }
 
@@ -150,7 +150,7 @@ public class Customer {
 	// method that will check if validate that the phoneNumber is valid	
 	public static boolean validatePhoneNumber(String phoneNumber) throws NewsAgentExceptionHandler {
 	    // Check if phoneNumber is empty
-	    if (phoneNumber.isBlank() || phoneNumber.isEmpty()) {
+	    if ( phoneNumber.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid phoneNumber.");
 	    }
 
@@ -171,7 +171,7 @@ public class Customer {
 	// method that will check if validate that the addressID is valid	
 	public static boolean validateAddressID(String addressID) throws NewsAgentExceptionHandler {
 	    // Check if addressID is empty
-	    if (addressID.isBlank() || addressID.isEmpty()) {
+	    if (addressID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid addressID.");
 	    }
 

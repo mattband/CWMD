@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
-import customer.Customer;
 
 import java.sql.ResultSet;
 
@@ -282,17 +281,17 @@ public boolean  getOrderBookById(String orderId) {
 		}
 	}
 
-	public boolean updateCustomer(Customer customer) {
+	public boolean updateCustomer(Customer updateCustomer) {
 		boolean updateSuccessful = true;
 
 		try {
 			preparedStatement = connect.prepareStatement(
 					"UPDATE Customer SET CustomerId=?, CustomerName=?, AddressId=?, PhoneNumber=? , Publication = ? WHERE CustomerId=?");
-			preparedStatement.setString(1, customer.getCustomerID());
-			preparedStatement.setString(2, customer.getCustomerName());
-			preparedStatement.setString(3, customer.getAddressID());
-			preparedStatement.setString(4, customer.getPhoneNumber());
-			preparedStatement.setString(5, customer.getPublicationID());
+			preparedStatement.setString(1, updateCustomer.getCustomerID());
+			preparedStatement.setString(2, updateCustomer.getCustomerName());
+			preparedStatement.setString(3, updateCustomer.getAddressID());
+			preparedStatement.setString(4, updateCustomer.getPhoneNumber());
+			preparedStatement.setString(5, updateCustomer.getPublicationID());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			updateSuccessful = false;
@@ -386,4 +385,175 @@ public boolean  getOrderBookById(String orderId) {
 		return getByIdSuccsessful;
 
 	}
+
+//--------------------------------------------------------------------------------publication- CRUD-----------------------------------------------------------------------------------------------------
+
+	
+	
+	
+	
+	
+	
+	public boolean insertPublication(Publication publication) {
+        boolean insertSuccessful = true;
+
+        try {
+            if (connect == null) {
+                System.out.println("Connection is null. Cannot insert.");
+                return false;
+            }
+
+            // Check if the publication ID already exists
+            if (publicationExists(publication.getPublicationID())) {
+                System.out.println("Order with ID " + publication.getPublicationID() + " already exists. Not inserting.");
+                return false;
+            }
+
+            preparedStatement = connect.prepareStatement(
+                    "INSERT INTO Publication; VALUES (?, ?, ?, ?, ?)"
+            );
+            preparedStatement.setString(1, publication.getPublicationID());
+            preparedStatement.setString(2, publication.getTitle());
+            preparedStatement.setString(3, publication.getPrice());
+            preparedStatement.setString(4, publication.getQuantity());
+            preparedStatement.setString(5, publication.getFrequency());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            insertSuccessful = false;
+            e.printStackTrace();
+        }
+
+        return insertSuccessful;
+    }
+
+
+
+	// Helper method to check if an publication with the given ID already exists
+    private boolean publicationExists(String publicationID) {
+        try {
+            preparedStatement = connect.prepareStatement("SELECT 1 FROM Publication  WHERE PublicationId  = ?");
+            preparedStatement.setString(1, publicationID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next(); // Returns true if the publication ID exists in the database
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
+public boolean updatePublication(Publication publication) {
+	boolean updateSuccessful = true;
+
+	try {
+		preparedStatement = connect.prepareStatement(
+				"UPDATE Publication  SET PublicationId =?, Title=?, Price =?, StocKQuantity =? , Frequency  =? WHERE PublicationId =?");
+		preparedStatement.setString(1, publication.getPublicationID());
+		preparedStatement.setString(2, publication.getTitle());
+		preparedStatement.setString(3, publication.getPrice());
+		preparedStatement.setString(4, publication.getQuantity());
+		preparedStatement.setString(5, publication.getFrequency());
+		preparedStatement.executeUpdate();
+	} catch (Exception e) {
+		updateSuccessful = false;
+		e.printStackTrace(); // Add proper error handling/logging
+	}
+
+	return updateSuccessful;
+}
+
+public void printAllPublications() {
+    try {
+        if (connect == null) {
+            System.out.println("Connection is null. Cannot retrieve data.");
+            return;
+        }
+
+        Statement statement = connect.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Publication");
+
+        while (resultSet.next()) {
+            String PublicationId = resultSet.getString("PublicationId");
+            String Title  = resultSet.getString("Title");
+            String Price = resultSet.getString("Price");
+            String StocKQuantity = resultSet.getString("StocKQuantity"); // Corrected column name
+            String Frequency = resultSet.getString("Frequency"); // Corrected column name
+
+            System.out.println("PublicationId: " + PublicationId +
+                    ", Title: " + Title +
+                    ", Price: " + Price +
+                    ", Quantity: " + StocKQuantity + // Corrected column name
+                    ", Frequency: " + Frequency); // Corrected column name
+        }
+
+        resultSet.close();
+        statement.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
+public boolean deletePublication(String publicationID) {
+    boolean deleteSuccessful = true;
+
+    try {
+        if (connect == null) {
+            System.out.println("Connection is null. Cannot delete.");
+            return false;
+        }
+
+        preparedStatement = connect.prepareStatement("DELETE FROM Publication WHERE PublicationId=?");
+        preparedStatement.setString(1, publicationID);
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        // Check if any rows were affected to determine if the deletion was successful
+        deleteSuccessful = rowsAffected > 0;
+    } catch (Exception e) {
+        deleteSuccessful = false;
+        e.printStackTrace(); // Add proper error handling/logging
+    }
+
+    return deleteSuccessful;
+}
+
+public boolean  getPublicationById(String publicationID) {
+    boolean getByIdSuccsessful = true;
+
+
+    try {
+        if (connect == null) {
+            System.out.println("Connection is null. Cannot retrieve data.");
+            return false;
+        }
+
+        preparedStatement = connect.prepareStatement("SELECT * FROM Publication  WHERE PublicationId  = ?");
+        preparedStatement.setString(1, publicationID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            String Title  = resultSet.getString("Title");
+            String Price = resultSet.getString("Price");
+            String Quantity  = resultSet.getString("StocKQuantity ");
+            String Frequency  = resultSet.getString("Frequency");
+
+            System.out.println("publicationID: " + publicationID +
+                    ", Title: " + Title +
+                    ", Price: " + Price +
+                    ", Quantity: " + Quantity +
+                    ", Frequency: " + Frequency);
+            }
+
+            resultSet.close();
+        } catch (Exception e) {
+        	getByIdSuccsessful = false;
+
+            e.printStackTrace();
+        }
+		return getByIdSuccsessful;
+
+  
+    }
 }

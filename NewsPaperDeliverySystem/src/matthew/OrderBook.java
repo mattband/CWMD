@@ -85,7 +85,7 @@ public class OrderBook {
 	// method that will check if validate that the orderID is valid
 	public static boolean validateOrderID(String orderID) throws NewsAgentExceptionHandler {
 	    // Check if orderID is empty
-	    if (orderID.isBlank() || orderID.isEmpty()) {
+	    if ( orderID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid Order ID.");
 	    }
 
@@ -110,7 +110,7 @@ public class OrderBook {
 	// method that will check if validate that the customerID is valid
 	public static boolean validateCustomerID(String customerID) throws NewsAgentExceptionHandler {
 	    // Check if customerID is empty
-	    if (customerID.isBlank() || customerID.isEmpty()) {
+	    if ( customerID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid customerID.");
 	    }
 
@@ -136,7 +136,7 @@ public class OrderBook {
 	// method that will check if validate that the publicationID is valid	
 	public static boolean validatePublicationID(String publicationID) throws NewsAgentExceptionHandler {
 	    // Check if publicationID is empty
-	    if (publicationID.isBlank() || publicationID.isEmpty()) {
+	    if ( publicationID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid publicationID.");
 	    }
 
@@ -162,7 +162,7 @@ public class OrderBook {
 	// method that will check if validate that the orderPrice is valid
 	public static boolean validateOrderPrice(String orderPrice) throws NewsAgentExceptionHandler {
 	    // Check if orderPrice is empty
-	    if (orderPrice.isBlank() || orderPrice.isEmpty()) {
+	    if ( orderPrice.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid order Price.");
 	    }
 
@@ -187,7 +187,7 @@ public class OrderBook {
 	// method that will check if validate that the orderShedule is valid
 	public static boolean validateOrderShedule(String orderShedule) throws NewsAgentExceptionHandler {
 		// checks if orderShedule is empty or null.
-		if (orderShedule.isBlank() || orderShedule.isEmpty()) {
+		if ( orderShedule.isEmpty()) {
 			throw new NewsAgentExceptionHandler("OrderShedule Needed...");
 		}
 		// checks if orderShedule length is below range.
