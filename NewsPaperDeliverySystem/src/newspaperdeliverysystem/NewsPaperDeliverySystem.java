@@ -39,7 +39,7 @@ public class NewsPaperDeliverySystem {
 //                System.out.println("Customer phone Number: " + customerPhoneNumber);
 //                
 //            }
-//                
+                
         
         } catch (SQLException e) {
             // Handle any exceptions that occur during the connection process

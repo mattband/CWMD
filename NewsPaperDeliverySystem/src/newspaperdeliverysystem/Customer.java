@@ -1,3 +1,5 @@
+package newspaperdeliverysystem;
+
 public class Customer {
 
     String name;
