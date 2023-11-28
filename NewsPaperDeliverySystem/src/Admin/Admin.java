@@ -51,7 +51,7 @@ public class Admin {
 
 	public boolean validateAdminUsername(String adminUsername) throws NewsagentExceptionHandler {
 		
-		if (adminUsername.isBlank() || adminUsername.isEmpty()) 
+		if (adminUsername.isEmpty() || adminUsername.isEmpty()) 
 			throw new NewsagentExceptionHandler ("Admin username NOT specified");
 		else if (adminUsername.length() < MIN_USERNAME_LENGTH)
 			throw new NewsagentExceptionHandler ("Admin username does not meet minimum length requirements");
@@ -68,7 +68,7 @@ public class Admin {
 
 	public boolean validateAdminPassword(String adminPassword) throws NewsagentExceptionHandler {
 		
-		if (adminPassword.isBlank() || adminPassword.isEmpty()) 
+		if (adminPassword.isEmpty() || adminPassword.isEmpty()) 
 			throw new NewsagentExceptionHandler ("Admin password NOT specified");
 		else if (adminPassword.length() < MIN_PASSWORD_LENGTH)
 			throw new NewsagentExceptionHandler ("Admin password does not meet minimum length requirements");
@@ -85,7 +85,7 @@ public class Admin {
 	//Admin ID String must be a minimum of 3 numbers and a maximum of 5 numbers
 	public boolean validateAdminID(String idNum) throws NewsagentExceptionHandler {
 		
-		if (idNum.isBlank() || idNum.isEmpty()) 
+		if (idNum.isEmpty() || idNum.isEmpty()) 
 			throw new NewsagentExceptionHandler ("Admin ID NOT specified");
 		else if (idNum.length() < MIN_ID_LENGTH)
 			throw new NewsagentExceptionHandler ("Admin ID does not meet minimum length requirements");

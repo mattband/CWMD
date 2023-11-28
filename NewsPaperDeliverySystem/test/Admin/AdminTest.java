@@ -1,165 +1,385 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package Admin;
 
+import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
  * @author cianf
  */
-public class AdminTest {
+public class AdminTest extends TestCase{
     
-    public AdminTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
+   //Testing adminUsername
+	
+	//Test #: 1
+	//Objective: Testing valid String length between 3 and 60 characters for adminPassword
+	//Inputs: String "joe"
+	//Expected O/P: true
+	
+	public void testvalidateAdminUsername001() {
+		try {
+			Admin admin = new Admin();
+			String input = "joe";
+			
+			boolean results = admin.validateAdminUsername(input);
+			assertEquals(true, results);
+			
+		} catch (NewsagentExceptionHandler e) {
+			fail();
+		}
+	}
+	
+	//Test #: 2
+	//Objective: Testing valid String length of 60 characters for adminPassword
+	//Inputs: String "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+	//Expected O/P: true
+	
+	public void testvalidateAdminUsername002() {
+		try {
+			Admin admin = new Admin();
+			String input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+			
+			boolean results = admin.validateAdminUsername(input);
+			assertEquals(true, results);
+			
+		} catch (NewsagentExceptionHandler e) {
+			fail();
+		}
+	}
+	
+	//Test #: 3
+	//Objective: Testing invalid empty String length
+	//Inputs: String ""
+	//Expected O/P: "Admin username NOT specified"
+	
+	public void testvalidateAdminUsername003() {
+		String expectOP = "Admin username NOT specified";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "";
+			
+			admin.validateAdminUsername(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of validateAdminUsername method, of class Admin.
-     */
-    @Test
-    public void testValidateAdminUsername() throws Exception {
-        System.out.println("validateAdminUsername");
-        String adminUsername = "";
-        Admin instance = new Admin();
-        boolean expResult = false;
-        boolean result = instance.validateAdminUsername(adminUsername);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 4
+	//Objective: Testing invalid String characters
+	//Inputs: String "83945"
+	//Expected O/P: "Admin username contains non-letter characters"
+	
+	public void testvalidateAdminUsername004() {
+		String expectOP = "Admin username contains non-letter characters";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "83945";
+			
+			admin.validateAdminUsername(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of validateAdminPassword method, of class Admin.
-     */
-    @Test
-    public void testValidateAdminPassword() throws Exception {
-        System.out.println("validateAdminPassword");
-        String adminPassword = "";
-        Admin instance = new Admin();
-        boolean expResult = false;
-        boolean result = instance.validateAdminPassword(adminPassword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 5
+	//Objective: Testing invalid String characters
+	//Inputs: String "#_))==+"
+	//Expected O/P: "Admin username contains non-letter characters"
+	
+	public void testvalidateAdminUsername005() {
+		String expectOP = "Admin username contains non-letter characters";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "#_))==+";
+			
+			admin.validateAdminUsername(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of validateAdminID method, of class Admin.
-     */
-    @Test
-    public void testValidateAdminID() throws Exception {
-        System.out.println("validateAdminID");
-        String idNum = "";
-        Admin instance = new Admin();
-        boolean expResult = false;
-        boolean result = instance.validateAdminID(idNum);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 6
+	//Objective: Testing invalid String length over the maximum length
+	//Inputs: String "sgdususcgdusguisgcuisgcgicuiscgusgcscbsgcusgcusgcusigcsigcisgcuisgcuifgusifgusidguegwigfuiwagfxgcgduewfduewugfouwGQ"
+	//Expected O/P: "Admin username does not meet maximum length requirements"
+	
+	public void testvalidateAdminUsername006() {
+		String expectOP = "Admin username does not meet maximum length requirements";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "sgdususcgdusguisgcuisgcgicuiscgusgcscbsgcusgcusgcusigcsigcisgcuisgcuifgusifgusidguegwigfuiwagfxgcgduewfduewugfouwGQ";
+			
+			admin.validateAdminUsername(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP);
 
-    /**
-     * Test of getUsername method, of class Admin.
-     */
-    @Test
-    public void testGetUsername() throws NewsagentExceptionHandler {
-        System.out.println("getUsername");
-        Admin instance = new Admin();
-        String expResult = "";
-        String result = instance.getUsername();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 7
+	//Objective: Testing invalid String characters between 3 and 60 characters for adminUsername
+	//Inputs: String "hi"
+	//Expected O/P: "Admin username does not meet minimum length requirements"
+	
+	public void testvalidateAdminUsername007() {
+		String expectOP = "Admin username does not meet minimum length requirements";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "hi";
+			
+			admin.validateAdminUsername(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of setUsername method, of class Admin.
-     */
-    @Test
-    public void testSetUsername() throws NewsagentExceptionHandler {
-        System.out.println("setUsername");
-        String username = "";
-        Admin instance = new Admin();
-        instance.setUsername(username);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Testing adminPassword
+	
+	//Test #: 8
+	//Objective: Testing valid String length between 5 and 12 characters for adminPassword
+	//Inputs: String "fires"
+	//Expected O/P: true
+	
+	public void testvalidateAdminPassword008() {
+		try {
+			Admin admin = new Admin();
+			String input = "fires";
+			
+			boolean results = admin.validateAdminPassword(input);
+			assertEquals(true, results);
+			
+		} catch (NewsagentExceptionHandler e) {
+			fail();
+		}
+	}
+	
+	//Test #: 9
+	//Objective: Testing valid String length between 5 and 12 characters for adminPassword
+	//Inputs: String "aaaaaaaaaaaa"
+	//Expected O/P: true
+	
+	public void testvalidateAdminPassword009() {
+		try {
+			Admin admin = new Admin();
+			String input = "aaaaaaaaaaaa";
+			
+			boolean results = admin.validateAdminPassword(input);
+			assertEquals(true, results);
+			
+		} catch (NewsagentExceptionHandler e) {
+			fail();
+		}
+	}
+	
+	//Test #: 10
+	//Objective: Testing invalid empty String for adminPassword
+	//Inputs: String ""
+	//Expected O/P: "Admin password NOT specified"
+	
+	public void testvalidateAdminPassword0010() {
+		String expectOP = "Admin password NOT specified";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "";
+			
+			admin.validateAdminPassword(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+		assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of getPassword method, of class Admin.
-     */
-    @Test
-    public void testGetPassword() throws NewsagentExceptionHandler {
-        System.out.println("getPassword");
-        Admin instance = new Admin();
-        String expResult = "";
-        String result = instance.getPassword();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 11
+	//Objective: Testing invalid String length under the minimum length of 5 characters for adminPassword
+	//Inputs: String "sad"
+	//Expected O/P: "Admin username does not meet minimum length requirements"
+	
+	public void testvalidateAdminPassword0011() {
+		String expectOP = "Admin password does not meet minimum length requirements";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "sad";
+			
+			admin.validateAdminPassword(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of setPassword method, of class Admin.
-     */
-    @Test
-    public void testSetPassword() throws NewsagentExceptionHandler {
-        System.out.println("setPassword");
-        String password = "";
-        Admin instance = new Admin();
-        instance.setPassword(password);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 12
+	//Objective: Testing invalid String length over the maximum length of 12 characters for adminPassword
+	//Inputs: String "abbreviations"
+	//Expected O/P: "Admin password does not meet maximum length requirements"
+	
+	public void testvalidateAdminPassword0012() {
+		String expectOP = "Admin password does not meet maximum length requirements";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "abbreviations";
+			
+			admin.validateAdminPassword(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of getId method, of class Admin.
-     */
-    @Test
-    public void testGetId() throws NewsagentExceptionHandler {
-        System.out.println("getId");
-        Admin instance = new Admin();
-        String expResult = "";
-        String result = instance.getId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+		}
+	}
+	
+	//Test #: 13
+	//Objective: Testing invalid String characters between 5 and 12 characters for adminPassword
+	//Inputs: String "=-,#-.+-_}#;"
+	//Expected O/P: "Admin password contains non-letter characters"
+	
+	public void testvalidateAdminPassword0013() {
+		String expectOP = "Admin password contains non-letter characters";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "=-,#-.+-_}#;";
+			
+			admin.validateAdminPassword(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
 
-    /**
-     * Test of setId method, of class Admin.
-     */
-    @Test
-    public void testSetId() throws NewsagentExceptionHandler {
-        System.out.println("setId");
-        String id = "";
-        Admin instance = new Admin();
-        instance.setId(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
+		}
+	}
+	
+	//Testing ID
+	
+	//Test #: 14
+	//Objective: Testing valid String length between 3 and 5 characters for idNum
+	//Inputs: String "1234"
+	//Expected O/P: true
+	
+	public void testvalidateAdminID0014() {
+		try {
+			Admin admin = new Admin();
+			String input = "ggg";
+			
+			boolean results = admin.validateAdminID(input);
+			assertEquals(true, results);
+			
+		} catch (NewsagentExceptionHandler e) {
+			fail();
+		}
+	}
+	
+	//Test #: 15
+	//Objective: Testing invalid int length under the minimum between 3 and 5 numbers for idNum
+	//Inputs: String "12"
+	//Expected O/P: "Admin ID does not meet minimum length requirements"
+	
+	public void testvalidateAdminID0015() {
+		String expectOP = "Admin ID does not meet minimum length requirements";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "12";
+			
+			admin.validateAdminID(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
+
+		}
+	}
+	
+	//Test #: 16
+	//Objective: Testing invalid int length over the maximum between 3 and 5 numbers for idNum
+	//Inputs: String "12345678"
+	//Expected O/P: "Admin ID does not meet maximum length requirements"
+	
+	public void testvalidateAdminID0016() {
+		String expectOP = "Admin ID does not meet maximum length requirements";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "12345678";
+			
+			admin.validateAdminID(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
+
+		}
+	}
+	
+	//Test #: 17
+	//Objective: Testing invalid empty int for adminID
+	//Inputs: String ""
+	//Expected O/P: "Admin ID NOT specified"
+	
+	public void testvalidateAdminID0017() {
+		String expectOP = "Admin ID NOT specified";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "";
+			
+			admin.validateAdminID(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP );
+
+		}
+	}
+	
+	//Test #: 18
+	//Objective: Testing invalid character input for adminID
+	//Inputs: String "7777"
+	//Expected O/P: "Admin ID contains non-letter characters"
+	
+	public void testvalidateAdminID0018() {
+		String expectOP = "Admin ID should not contain special characters";
+		
+		try {
+			Admin admin = new Admin();
+			String input = "++++";
+			
+			admin.validateAdminID(input);
+			fail();
+			
+		} catch (NewsagentExceptionHandler e) {
+			assertEquals(e.getMessage(), expectOP);
+
+		}
+	}
+
 }
