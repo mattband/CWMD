@@ -74,11 +74,10 @@ public class MySQLAccess {
             }
 
             preparedStatement = connect.prepareStatement(
-                    "INSERT INTO NEWSAGENT VALUES (?, ?, ?)"
+                    "INSERT INTO NEWSAGENT VALUES (?, ?)"
             );
-            preparedStatement.setString(1, newsagent.getUsername());
+            preparedStatement.setString(1, newsagent.getId());
             preparedStatement.setString(2, newsagent.getPassword());
-            preparedStatement.setString(3, newsagent.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -110,12 +109,12 @@ public class MySQLAccess {
 
 	public boolean updateNewsagent(Newsagent newsagent) {
 		boolean updateSuccessful = true;
-
-		try {
-			preparedStatement = connect.prepareStatement(
-					"UPDATE NEWSAGENT SET AGENTID = ? , AGENTPASSWORD = ?");
+                String sql = "UPDATE NEWSAGENT SET AGENTID = ? , AGENTPASSWORD = ? WHERE AGENTID = ?";
+		try(PreparedStatement preparedStatement = connect.prepareStatement(sql)){
 			preparedStatement.setString(1, newsagent.getId());
 			preparedStatement.setString(2, newsagent.getPassword());
+			preparedStatement.setString(3, newsagent.getId());
+                        
 			
 			int rowsAffected = preparedStatement.executeUpdate();
 			
@@ -164,7 +163,9 @@ public class MySQLAccess {
 	        int rowsAffected = preparedStatement.executeUpdate();
 
 	        // Check if any rows were affected to determine if the deletion was successful
-	        deleteSuccessful = rowsAffected > 0;
+	        if(rowsAffected > 0){
+                    System.out.println("Delete successfull");
+                }
 	    } catch (Exception e) {
 	        deleteSuccessful = false;
 	        e.printStackTrace(); // Add proper error handling/logging

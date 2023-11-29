@@ -11,8 +11,8 @@ package Newsagent;
 public class Newsagent {
 	
 	// CONSTANTS 
-	private final int MIN_USERNAME_LENGTH = 3;
-	private final int MAX_USERNAME_LENGTH = 60;
+//	private final int MIN_USERNAME_LENGTH = 3;
+//	private final int MAX_USERNAME_LENGTH = 60;
 
 	private final int MIN_PASSWORD_LENGTH = 5;
 	private final int MAX_PASSWORD_LENGTH = 12;
@@ -21,13 +21,13 @@ public class Newsagent {
 	private final int MAX_ID_LENGTH = 5;
 	
 	// instance vars
-	private String username;
+//	private String username;
 	private String password;
 	private String id;
 
 	public Newsagent(String newsagentId, String newsagentPassword) throws NewsagentExceptionHandler {
 		try {
-			validateNewsagentUsername(newsagentId);
+			validateNewsagentID(newsagentId);
 			validateNewsagentPassword(newsagentPassword);
 		}catch(NewsagentExceptionHandler  e) {
 			throw e;
@@ -44,20 +44,20 @@ public class Newsagent {
 	
 	//Newsagent username string must be a minimum of 3 characters and a maximum of 60 characters
 
-		public boolean validateNewsagentUsername(String newsagentUsername) throws NewsagentExceptionHandler {
-			
-			if (newsagentUsername.isEmpty() || newsagentUsername.isEmpty()) 
-				throw new NewsagentExceptionHandler ("Newsagent username NOT specified");
-			else if (newsagentUsername.length() < MIN_USERNAME_LENGTH)
-				throw new NewsagentExceptionHandler ("Newsagent username does not meet minimum length requirements");
-			else if (newsagentUsername.length() > MAX_USERNAME_LENGTH)
-				throw new NewsagentExceptionHandler ("Newsagent username does not meet maximum length requirements");
-			
-//			if (!newsagentUsername.matches("[a-zA-Z]+")) {
-//		        throw new NewsagentExceptionHandler ("Newsagent username contains non-letter characters");
-//		    }
-			return newsagentUsername.length() >= MIN_USERNAME_LENGTH && newsagentUsername.length() <= MAX_USERNAME_LENGTH ;
-	}
+//		public boolean validateNewsagentUsername(String newsagentUsername) throws NewsagentExceptionHandler {
+//			
+//			if (newsagentUsername.isEmpty() || newsagentUsername.isEmpty()) 
+//				throw new NewsagentExceptionHandler ("Newsagent username NOT specified");
+//			else if (newsagentUsername.length() < MIN_USERNAME_LENGTH)
+//				throw new NewsagentExceptionHandler ("Newsagent username does not meet minimum length requirements");
+//			else if (newsagentUsername.length() > MAX_USERNAME_LENGTH)
+//				throw new NewsagentExceptionHandler ("Newsagent username does not meet maximum length requirements");
+//			
+////			if (!newsagentUsername.matches("[a-zA-Z]+")) {
+////		        throw new NewsagentExceptionHandler ("Newsagent username contains non-letter characters");
+////		    }
+//			return newsagentUsername.length() >= MIN_USERNAME_LENGTH && newsagentUsername.length() <= MAX_USERNAME_LENGTH ;
+//	}
 		
 		//Newsagent password string must be a minimum of 5 characters and a maximum of 12 characters
 
@@ -76,14 +76,14 @@ public class Newsagent {
 			return newsagentPassword.length() >= MIN_PASSWORD_LENGTH && newsagentPassword.length() <= MAX_PASSWORD_LENGTH ;	
 		}
 
-		
-		public String getUsername() {
-			return username;
-		}
-
-		public void setUsername(String username) {
-			this.username = username;
-		}
+//		
+//		public String getUsername() {
+//			return username;
+//		}
+//
+//		public void setUsername(String username) {
+//			this.username = username;
+//		}
 
 		public String getPassword() {
 			return password;

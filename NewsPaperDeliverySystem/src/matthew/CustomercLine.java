@@ -176,25 +176,25 @@ public class CustomercLine {
 			System.out.print("\nEnter selection from the options above: ");
 			int afermUpdate = sc.nextInt();
 			if (afermUpdate == 1) {
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Please-enter-the-Customer-ID-------------|");
-			System.out.println("|-----and-Details-of-Customer-you-wish-to-Update------|");	
-			System.out.print("|\n|  . Customer ID: ");
-			String upCustomerIDInput = sc.next();
-			System.out.print("|\n|  . Customers Name: ");
-			String upcustomerNameInput = sc.next();
-			System.out.print("|\n|  . Phone Number: ");    
-			String upPhoneNumberInput = sc.next();
-			System.out.println("|                                                       ");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nGenerating updated customer from the Inputs above: ");
-			String uppublicationIDInput =upCustomerIDInput;
-			String upAddressIDInput = upCustomerIDInput;
+                            System.out.println("  _____________________________________________________");
+                            System.out.println(" /                                                     \\");
+                            System.out.println("|--------------Please-enter-the-Customer-ID-------------|");
+                            System.out.println("|-----and-Details-of-Customer-you-wish-to-Update------|");	
+                            System.out.print("|\n|  . Customer ID: ");
+                            String upCustomerIDInput = sc.next();
+                            System.out.print("|\n|  . Customers Name: ");
+                            String upcustomerNameInput = sc.next();
+                            System.out.print("|\n|  . Phone Number: ");    
+                            String upPhoneNumberInput = sc.next();
+                            System.out.println("|                                                       ");
+                            System.out.println("\\-------------------------------------------------------/");
+                            System.out.print("\nGenerating updated customer from the Inputs above: ");
+                            String uppublicationIDInput =upCustomerIDInput;
+                            String upAddressIDInput = upCustomerIDInput;
 
 
 			        try {
-						Customer updateCustomer = new Customer();
+                                    Customer updateCustomer = new Customer();
 			            MySQLAccess sql = new MySQLAccess();
 			            Customer.validateCustomerID(upCustomerIDInput);
 			            Customer.validateCustomerName(upcustomerNameInput);

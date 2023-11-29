@@ -8,9 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
-
-
-
 /**
  *
  * @author cianf
@@ -26,8 +23,10 @@ public static void main(String[] args) throws Exception {
 		MySQLAccess create = new MySQLAccess();
 		MySQLAccess update = new MySQLAccess();
 		MySQLAccess delete = new MySQLAccess();
+                Scanner sc = new Scanner(System.in);
+                int input;
+	do{
 		
-		Scanner sc = new Scanner(System.in);
 		System.out.println("  _____________________________________________________");
 		System.out.println(" /                                                     \\");
 		System.out.println("|----------------Newsagent-Menu-Options:---------------|");
@@ -40,7 +39,7 @@ public static void main(String[] args) throws Exception {
 		System.out.println("|                                                       |");
 		System.out.println("\\-------------------------------------------------------/");
 		System.out.print("\nEnter selection from the options above: ");
-		int input = sc.nextInt();
+		input = sc.nextInt();
 		switch (input) {
 
 		case 1:
@@ -60,19 +59,17 @@ public static void main(String[] args) throws Exception {
 				System.out.println("|--------------Please-enter-the-following:--------------|");
 				System.out.print("|\n|  . Newsagent ID: ");
 				String newsagentIDInput = sc.next();
-				System.out.print("|\n|  . Newsagent Username: ");    
-				String newsagentUsernameInput = sc.next();
 				System.out.print("|\n|  . Newsagent Password: ");
 				String newsagentPasswordInput = sc.next();
 				System.out.println("|                                                       ");
 				System.out.println("\\-------------------------------------------------------/");
 				System.out.print("\nCreating a Newsagent from the Inputs above: ");
 				try {
-					
-					Newsagent newAgent = new Newsagent(newsagentIDInput, newsagentPasswordInput);
-					boolean res = create.insertNewsagent(newAgent);
-					
 
+                                    Newsagent newAgent = new Newsagent(newsagentIDInput, newsagentPasswordInput);
+                                    
+                                    boolean res = create.insertNewsagent(newAgent);
+	
 					if(res == true) {
 						System.out.println("Inserted");
 					}
@@ -140,20 +137,23 @@ public static void main(String[] args) throws Exception {
 			System.out.print("\nEnter selection from the options above: ");
 			int afermViewByID = sc.nextInt();
 			if (afermViewByID == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Please-enter-the-following:--------------|");
-				System.out.print("|\n|  . Newsagent ID: ");
-				String newsagentIDInput = sc.next();
-				System.out.print("|\n|  . Newsagent Password: ");
-				String newsagentPasswordInput = sc.next();
-				System.out.println("|                                                       ");
-				System.out.println("\\-------------------------------------------------------/");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nFetching Order Book from the Inputs above: ");
+                            System.out.println("  _____________________________________________________");
+                            System.out.println(" /                                                     \\");
+                            System.out.println("|--------------Please-enter-the-following:--------------|");
+                            System.out.print("|\n|  . Newsagent ID: ");
+                            String newsagentIDInput = sc.next();
+                            System.out.print("|\n|  . Newsagent Password: ");
+                            String newsagentPasswordInput = sc.next();
+                            System.out.println("|                                                       ");
+                            System.out.println("\\-------------------------------------------------------/");
+                            System.out.println("\\-------------------------------------------------------/");
+                            System.out.print("\nFetching Order Book from the Inputs above: ");
+          
 	        try {
-
-	            Newsagent updateAgent = new Newsagent(newsagentIDInput, newsagentPasswordInput);
+                    
+	            Newsagent updateAgent = new Newsagent();
+                    updateAgent.setId(newsagentIDInput);
+                    updateAgent.setPassword(newsagentPasswordInput);
 	            boolean updateRecord = update.updateNewsagent(updateAgent);
 
 	            if (updateRecord == true) {
@@ -163,6 +163,7 @@ public static void main(String[] args) throws Exception {
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
+                    
 	        }
 			} else if (afermViewByID == 2) {
 				generateNewsagentMenu();
@@ -176,23 +177,40 @@ public static void main(String[] args) throws Exception {
 			System.out.println("  _____________________________________________________");
 			System.out.println(" /                                                     \\");
 			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-----------------Delete-Newsagent-ByID---------------|");
+			System.out.println("|------------------Delete-Newsagent-ByID-----------------|");
 			System.out.println("|  1. Yes.                                              |");
 			System.out.println("|  2. No.                                               |");
 			System.out.println("|                                                       |");
 			System.out.println("\\-------------------------------------------------------/");
 			System.out.print("\nEnter selection from the options above: ");
-			String deleteAgentById = sc.next();
-			
-			// Pass the String ID to deleteDeliveryPerson
-            boolean deleteResult = delete.deleteNewsagent(deleteAgentById);
+			int afermDelete = sc.nextInt();
+			if (afermDelete == 1) {
+                            System.out.println("  _____________________________________________________");
+                            System.out.println(" /                                                     \\");
+                            System.out.println("|--------------Please-enter-the-Newsagent-ID--------------|");
+                            System.out.println("|-------------Of-Newsagent-you-wish-to-Delete-------------|");
+                            System.out.print("|\n|  . Newsagent ID: ");
+                            String deleteNewsagentInput = sc.next();
+                            System.out.println("|\n|                                                       |");
+                            System.out.println("\\-------------------------------------------------------/");
+			try {
+	            // Creating an instance of MySQLAccess	
+	                boolean deleteResult = delete.deleteNewsagent(deleteNewsagentInput);
 
-            if (deleteResult == true) {
-                System.out.println("Record deleted successfully");
-            } else {
-                System.out.println("Record deletion unsuccessful");
-            }
-			
+	                if (deleteResult) {
+	                    System.out.println("Newsagent deleted successfully.");
+	                } else {
+	                    System.out.println("Failed to delete Newsagent.");
+	                }
+	            } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+			} else if (afermDelete == 2) {
+				generateNewsagentMenu();
+
+			} else if (afermDelete != 1 || afermDelete != 2) {
+				System.out.println("please enter a valid input on screen.");
+			}
 			
 			break;
 
@@ -210,6 +228,7 @@ public static void main(String[] args) throws Exception {
 				System.out.println("please enter a valid input on screen.");
 
 		}
+        }while(input != 5);
 
 	}
 	
