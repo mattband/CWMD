@@ -1,289 +1,197 @@
 package matthew;
 
-import java.util.Random;
-import java.util.Scanner;
+public class Customer {
 
-/*
- * 
- * this class is being used for a example at the current time
- * i will save it somewhere else later.*/
+	/*
+	 * setting up a product skeleton for orderbook creating empty methods then
+	 * develope testcases for those methods ie. boundrey value analisis. etcetera
+	 * will be about 30 -35 tests total for hole class working on intergration with
+	 * command line next the variables are subject to change. then database.
+	 */
 
-public class CustomercLine {
-	public static void main(String[] args) throws NewsAgentExceptionHandler {
-		generateCustomerMenu();
+	// initializing variables
+	private String customerID; // length 5
+	private String customerName; // length 1 - 20
+	private String addressID; // same as customer ID
+	private String phoneNumber;// length 10
+	private String PublicationID; // same as customerid
+
+	// getters and setters for all variables within the customer class.
+	public String getCustomerID() {
+		return customerID;
+	}
+
+	public void setCustomerID(String customerID) {
+		this.customerID = customerID;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getAddressID() {
+		return addressID;
+	}
+
+	public void setAddressID(String addressID) {
+		this.addressID = addressID;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPublicationID() {
+		return PublicationID;
+	}
+
+	public void setPublicationID(String publicationID) {
+		PublicationID = publicationID;
+	}
+
+	// constructor for cerating customer and validating that all elements are
+	// legal.
+	public Customer(String customerID, String customerName, String addressID, String phoneNumber,
+			String publicationID) {
+		super();
+		this.customerID = customerID;
+		this.customerName = customerName;
+		this.addressID = addressID;
+		this.phoneNumber = phoneNumber;
+		PublicationID = publicationID;
+	}
+
+	// empty constructor
+	public Customer() {
 
 	}
 
-	public static void generateCustomerMenu() throws NewsAgentExceptionHandler {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("  _____________________________________________________");
-		System.out.println(" /                                                     \\");
-		System.out.println("|----------------Customer-Menu-Options:---------------|");
-		System.out.println("|                                                       |");
-		System.out.println("|  1. Create Customer.                                  |");
-		System.out.println("|  2. View All Customers.                               |");                                
-		System.out.println("|  3. View Select Customer.                             |");
-		System.out.println("|  4. Update Customer.                                  |");
-		System.out.println("|  5. Delete Customer.                                  |");
-		System.out.println("|  6. Exit.            .                                |");
-		System.out.println("|                                                       |");
-		System.out.println("\\-------------------------------------------------------/");
-		System.out.print("\nEnter selection from the options above: ");
-		int input = sc.nextInt();
-		switch (input) {
-
-		case 1:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-------------------create-a-Customer-------------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermCreate = sc.nextInt();
-			if(afermCreate == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Please-enter-the-following:--------------|");
-				System.out.print("|\n|  . Customers Name: ");
-				String customerNameInput = sc.next();
-				System.out.print("|\n|  . Phone Number: ");    
-				String phoneNumberInput = sc.next();
-				System.out.println("|                                                       ");
-				System.out.println("\\-------------------------------------------------------/");
-				System.out.print("\nGenerating Order Book from the Inputs above: ");
-				Random random = new  Random(System.currentTimeMillis());
-				int customerIDint = ((1 + random.nextInt(2)) * 10000 + random.nextInt(10000));
-				String customerIDinput = Integer.toString(customerIDint);
-				String publicationIDInput = customerIDinput;
-				String addressIDinput = customerIDinput;
-				Customer.validateCustomerID(customerIDinput);
-				Customer.validatePublicationID(publicationIDInput);
-				Customer.validateAddressID(addressIDinput);
-				Customer.validatePhoneNumber(phoneNumberInput);
-				Customer.validateCustomerName(customerNameInput);
-				Customer inputCustomer = new Customer(customerIDinput,customerNameInput,addressIDinput,phoneNumberInput,publicationIDInput);
-				try {
-					
-					MySQLAccess sql = new MySQLAccess();
-					boolean res = sql.insertCustomer(inputCustomer);
-					sql.insertCustomer(inputCustomer);
-
-					if(res) {
-						System.out.println("Inserted");
-					}
-					if(!res) {
-						System.out.println("not Inserted");
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}else if (afermCreate == 2) {
-				generateCustomerMenu();				
-			}else if(afermCreate != 1 || afermCreate != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}
-	
-					
-			
-			break;
-
-		case 2:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-------------------View-All-Customers------------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermViewAll = sc.nextInt();
-			if (afermViewAll == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|----------------------All-Customers:--------------------|");
-				System.out.println("\\-------------------------------------------------------/");
-				System.out.print("\nFetching All Order Books: ");
-				try {
-					MySQLAccess sql = new MySQLAccess();
-					sql.printAllCustomer();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else if (afermViewAll == 2) {
-				generateCustomerMenu();
-			} else if (afermViewAll != 1 || afermViewAll != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}
-			
-			break;
-		case 3:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-------------------View-byID-Customer------------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermViewByID = sc.nextInt();
-			if (afermViewByID == 1) {
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Please-enter-the-Customer-ID-------------|");
-			System.out.println("|--------------Of-Customer-you-wish-to-View-------------|");			
-			System.out.print("|\n|  . Customer ID: ");
-			String getByCustomerIDInput = sc.next();
-			System.out.println("|\n|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nFetching Order Book from the Inputs above: ");
-			Customer.validateCustomerID(getByCustomerIDInput);
-			try {
-	            MySQLAccess sql = new MySQLAccess();
-
-	            // Call getCustomergetById method to retrieve Customer by CustomerID
-	            boolean getByIdResult = sql.getCustomerById(getByCustomerIDInput);
-
-	            if (getByIdResult) {
-	                System.out.println("Custmoner retrieved successfully.");
-	            } else {
-	                System.out.println("Failed to retrieve Customer. It may not exist or there was an error.");
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-			} else if (afermViewByID == 2) {
-				generateCustomerMenu();
-
-			} else if (afermViewByID != 1 || afermViewByID != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}   
-
-			break;
-		case 4:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|------------------Update-Customer-ByID-----------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermUpdate = sc.nextInt();
-			if (afermUpdate == 1) {
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Please-enter-the-Customer-ID-------------|");
-			System.out.println("|-----and-Details-of-Customer-you-wish-to-Update------|");	
-			System.out.print("|\n|  . Customer ID: ");
-			String upCustomerIDInput = sc.next();
-			System.out.print("|\n|  . Customers Name: ");
-			String upcustomerNameInput = sc.next();
-			System.out.print("|\n|  . Phone Number: ");    
-			String upPhoneNumberInput = sc.next();
-			System.out.println("|                                                       ");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nGenerating updated customer from the Inputs above: ");
-			String uppublicationIDInput =upCustomerIDInput;
-			String upAddressIDInput = upCustomerIDInput;
-
-
-			        try {
-						Customer updateCustomer = new Customer();
-			            MySQLAccess sql = new MySQLAccess();
-			            Customer.validateCustomerID(upCustomerIDInput);
-			            Customer.validateCustomerName(upcustomerNameInput);
-			            Customer.validatePhoneNumber(upPhoneNumberInput);
-			            Customer.validatePublicationID(uppublicationIDInput);
-			            Customer.validateAddressID(upAddressIDInput);
-						updateCustomer = new Customer(upCustomerIDInput,upcustomerNameInput,upAddressIDInput,upPhoneNumberInput,uppublicationIDInput);
-
-			            // Insert an OrderBook
-			            sql.updateCustomer(updateCustomer);
-
-			            // Update the OrderBook by OrderID
-			            boolean updateResult = sql.updateCustomer(updateCustomer);
-			            if (updateResult) {
-			                System.out.println("Customer updated successfully.");
-			            } else {
-			                System.out.println("Failed to update Customer.");
-			            }
-			        } catch (Exception e) {
-			            e.printStackTrace();
-			        }
-			} else if (afermUpdate == 2) {
-				generateCustomerMenu();
-
-			} else if (afermUpdate != 1 || afermUpdate != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}   
-			
-			break;
-		case 5:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|------------------Delete-Customer-ByID-----------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermDelete = sc.nextInt();
-			if (afermDelete == 1) {
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Please-enter-the-Customer-ID--------------|");
-			System.out.println("|-------------Of-Customer-you-wish-to-Delete-------------|");
-			System.out.print("|\n|  . Customer ID: ");
-			String deleteCustomerInput = sc.next();
-			System.out.println("|\n|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			try {
-	            // Creating an instance of MySQLAccess
-	            MySQLAccess sql = new MySQLAccess();	
-	            Customer.validateCustomerID(deleteCustomerInput);
-	                boolean deleteResult = sql.deleteCustomer(deleteCustomerInput);
-
-	                if (deleteResult) {
-	                    System.out.println("Customer deleted successfully.");
-	                } else {
-	                    System.out.println("Failed to delete Customer.");
-	                }
-	            } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-			} else if (afermDelete == 2) {
-				generateCustomerMenu();
-
-			} else if (afermDelete != 1 || afermDelete != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}  
-			break;
-
-
-
-		default:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Something-has-gone-wrong-----------------|");
-			System.out.println("|----------Please-exit-to-the-previous-panel------------|");
-			System.out.println("|  1. Exit                                              |");
-			System.out.println("\\-------------------------------------------------------/");
-			int exit = sc.nextInt();
-			if(exit == 1) {
-				generateCustomerMenu();
-			} else
-				System.out.println("please enter a valid input on screen.");
-
+	// method that will check if validate that the customerID is valid
+	public static boolean validateCustomerID(String customerID) throws NewsAgentExceptionHandler {
+		// Check if customerID is empty
+		if (customerID.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid customerID.");
 		}
 
+		// Try to parse the customerID as an integer
+		try {
+			int customerIDTest = Integer.parseInt(customerID);
+
+			// Check if the parsed integer is a 5-digit number
+			if (customerIDTest < 10000 || customerIDTest > 99999) {
+				throw new NewsAgentExceptionHandler(
+						"The customer ID is invalid. Please enter a correct 5-digit customer ID.");
+			}
+
+		} catch (NumberFormatException e) {
+			// Handle the case where customerID is not a valid integer
+			throw new NewsAgentExceptionHandler(
+					"The customer ID is not a valid integer. Please enter a correct 5-digit customer ID.");
+		}
+
+		// Returning true if the customerID is within the valid ranges
+		return customerID.length() == 5;
 	}
 
+	// method that will check if validate that the publicationID is valid
+	public static boolean validatePublicationID(String publicationID) throws NewsAgentExceptionHandler {
+		// Check if publicationID is empty
+		if (publicationID.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid publicationID.");
+		}
+
+		// Try to parse the publicationID as an integer
+		try {
+			int publicationIDTest = Integer.parseInt(publicationID);
+
+			// Check if the parsed integer is a 5-digit number
+			if (publicationIDTest < 10000 || publicationIDTest > 99999) {
+				throw new NewsAgentExceptionHandler(
+						"The publication ID is invalid. Please enter a correct 5-digit publication ID.");
+			}
+
+		} catch (NumberFormatException e) {
+			// Handle the case where publicationID is not a valid integer
+			throw new NewsAgentExceptionHandler(
+					"The publication ID is not a valid integer. Please enter a correct 5-digit publication ID.");
+		}
+
+		// Returning true if the orderID is within the valid ranges
+		return publicationID.length() == 5;
 	}
 
+	// method that will check if validate that the customerName is valid
+	public static boolean validateCustomerName(String customerName) throws NewsAgentExceptionHandler {
+		// Check if customerName is empty
+		if (customerName.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid customerName.");
+		}
+
+		// Check if customerName length is within the valid range (1 to 20 characters)
+		if (customerName.length() <= 1 || customerName.length() > 20) {
+			throw new NewsAgentExceptionHandler(
+					"The customerName is invalid. Please enter a name between 1 and 20 characters.");
+		}
+
+		// Returning true if the customerName is within the valid range
+		return customerName.length() < 1 && customerName.length() <= 20;
+	}
+
+	// method that will check if validate that the phoneNumber is valid
+	public static boolean validatePhoneNumber(String phoneNumber) throws NewsAgentExceptionHandler {
+		// Check if phoneNumber is empty
+		if (phoneNumber.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid phoneNumber.");
+		}
+
+		// Check if phoneNumber length is exactly 10 characters
+		if (phoneNumber.length() != 10) {
+			throw new NewsAgentExceptionHandler("The phoneNumber is invalid. Please enter a 10-digit phone number.");
+		}
+
+		// Check if phoneNumber contains only digits
+		if (!phoneNumber.matches("\\d+")) {
+			throw new NewsAgentExceptionHandler(
+					"The phoneNumber is invalid. Please enter a valid numeric phone number.");
+		}
+
+		// Returning true if the phoneNumber is valid
+		return true;
+	}
+
+	// method that will check if validate that the addressID is valid
+	public static boolean validateAddressID(String addressID) throws NewsAgentExceptionHandler {
+		// Check if addressID is empty
+		if (addressID.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid addressID.");
+		}
+
+		// Try to parse the addressID as an integer
+		try {
+			int addressIDTest = Integer.parseInt(addressID);
+
+			// Check if the parsed integer is a 5-digit number
+			if (addressIDTest < 10000 || addressIDTest > 99999) {
+				throw new NewsAgentExceptionHandler(
+						"The address ID is invalid. Please enter a correct 5-digit address ID.");
+			}
+
+		} catch (NumberFormatException e) {
+			// Handle the case where customerID is not a valid integer
+			throw new NewsAgentExceptionHandler(
+					"The address ID is not a valid integer. Please enter a correct 5-digit address ID.");
+		}
+
+		// Returning true if the addressID is within the valid ranges
+		return addressID.length() == 5;
+	}
+
+}

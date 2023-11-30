@@ -58,10 +58,10 @@ public class CustomerTest extends TestCase {
 	// output: ex thrown message
     public void testValidateCustomerID004() {
         try {
-            Customer.validateAddressID("");
+            Customer.validateCustomerID("");
             fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
         } catch (NewsAgentExceptionHandler e) {
-            assertEquals("Please enter a valid customer ID.", e.getMessage());
+            assertEquals("Please enter a valid customerID.", e.getMessage());
         }
     }
 	// test number:1
@@ -254,5 +254,7 @@ public class CustomerTest extends TestCase {
             fail("Unexpected exception: " + e.getMessage());
         }
     }
+    
+    
 
 }

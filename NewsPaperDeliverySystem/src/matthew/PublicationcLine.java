@@ -1,12 +1,9 @@
 package matthew;
 
-import java.util.Random;
+
 import java.util.Scanner;
 
-/*
- * 
- * this class is being used for a example at the current time
- * i will save it somewhere else later.*/
+
 
 public class PublicationcLine {
 	public static void main(String[] args) throws NewsAgentExceptionHandler {
@@ -88,6 +85,7 @@ public class PublicationcLine {
 			} else if (afermCreate != 1 || afermCreate != 2) {
 				System.out.println("please enter a valid input on screen.");
 			}
+			sc.close();
 
 			break;
 
@@ -204,7 +202,7 @@ public class PublicationcLine {
 					Publication.validatePrice(upPriceInput);
 					Publication.validateQuantity(upQuanityInput);
 					Publication.validateFrequency(upFrequnceyInput);
-				
+
 					updatePublication = new Publication(upPublicationIDInput, upTitleInput, upPriceInput,
 							upQuanityInput, upFrequnceyInput);
 
