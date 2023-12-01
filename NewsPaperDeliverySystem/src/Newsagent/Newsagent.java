@@ -4,6 +4,8 @@
  */
 package Newsagent;
 
+import java.util.Scanner;
+
 /**
  *
  * @author cianf
@@ -111,10 +113,23 @@ public class Newsagent {
 			else if (idNum.length() > MAX_ID_LENGTH)
 				throw new NewsagentExceptionHandler ("Newsagent ID does not meet maximum length requirements");
 			
-		    if (!idNum.matches("^[a-zA-Z0-9]+$")) {
-		        throw new NewsagentExceptionHandler ("Newsagent ID should not contain special characters");
-		    }
+                        if (!idNum.matches("^[0-9]+$")) {
+                            throw new NewsagentExceptionHandler("Newsagent ID should contain only numbers");
+                        }
 			return idNum.length() >= MIN_ID_LENGTH && idNum.length() <= MAX_ID_LENGTH ;
 		}
+                
+                public  boolean createNewsagent(Newsagent newsagent) throws NewsagentExceptionHandler
+                {
+                    Scanner scanner = new Scanner(System.in);
+                    boolean results = false;
+                    System.out.println("Enter a valid id between 3-5");
+                    String id = scanner.next();
+                    newsagent.validateNewsagentID(id);
+                    
+                    
+                return results;
+
+                }
 
 }

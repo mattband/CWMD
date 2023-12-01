@@ -64,7 +64,7 @@ public class MySQLAccess {
 
 	// ---------------------------------------------------------------- CRUD Newsagent --------------------------------------------------------------------------------------------------
 
-    public boolean insertNewsagent(Newsagent newsagent) {
+    public boolean insertNewsagent(Newsagent newsagent)  {
         boolean insertSuccessful = true;
 
         try {
@@ -87,8 +87,6 @@ public class MySQLAccess {
 
         return insertSuccessful;
     }
-
-
 
 	//	public boolean insertOrderBook(OrderBook orderbook) {
 //		boolean insertSuccessfull = true;
