@@ -3,30 +3,60 @@ package DeliveryDocket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Collection;
+import javax.xml.bind.annotation.XmlTransient;
 
 public class DeliveryDocket {
-    private static final String url = "jdbc:derby://localhost:1527/NewsPaperDeliverySystem";
-    private static final String user = "nbuser";
-    private static final String password = "nbuser";
+    private int deliverydocketId;
+    private String deliveryStatus;
+//    private Customer customerId;
+//    private Orderbook orderBookId;
+//    private Publication publicationId;
+    
+    public DeliveryDocket() {}
+    
+    public DeliveryDocket(int deliveryDocketId){
+        this.deliverydocketId = deliveryDocketId;
+    }
+    
+    public int getDeliveryDocketId(){
+        return deliverydocketId;
+    }
 
-    public static void main(String[] args) {
-        try {
-            // Load the JDBC driver
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
+    public void setDeliverydocketid(Integer deliverydocketid) {
+        this.deliverydocketId = deliverydocketid;
+    }
 
-            // Establish the connection
-            Connection connection = DriverManager.getConnection(url, user, password);
+    public String getDeliverystatus() {
+        return deliveryStatus;
+    }
 
-            if (connection != null) {
-                System.out.println("Connected to the database!");
-                connection.close();
-            } else {
-                System.out.println("Failed to connect to the database!");
-            }
+    public void setDeliverystatus(String deliverystatus) {
+        this.deliveryStatus = deliverystatus;
+    }
 
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    	
+//    public Customer getCustomerid() {
+//        return customerId;
+//    }
+//
+//    public void setCustomerid(Customer customerid) {
+//        this.customerId = customerid;
+//    }
+//
+//    public Orderbook getOrderid() {
+//        return orderBookId;
+//    }
+//
+//    public void setOrderid(Orderbook orderid) {
+//        this.orderBookId = orderid;
+//    }
+//
+//    public Publication getPublicationid() {
+//        return publicationId;
+//    }
+//
+//    public void setPublicationid(Publication publicationid) {
+//        this.publicationId = publicationid;
+//    }
 }
-}
+
