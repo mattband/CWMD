@@ -1,4 +1,5 @@
 package matthew;
+//developer. Matthew devlin
 
 import junit.framework.TestCase;
 
@@ -341,21 +342,21 @@ public class PublicationTest extends TestCase {
 		try {
 			assertFalse(Publication.validateFrequency("Dai"));
 		} catch (NewsAgentExceptionHandler e) {
-			assertEquals("The Frequency is invalid. Please enter a Frequency between 5 and 20 characters.",
+			assertEquals("The Frequency is invalid. Please enter a Frequency between 5 and 50 characters.",
 					e.getMessage());
 		}
 	}
 
 	// test number:4
 	// test obj:Test case for Frequency too long
-	// inputs: "DailyPublicationFrequencyIsTooLong"
+	// inputs: "DailyPublicationFrequencyIsTooLonghect jrejiorhi ri"
 	// ex output: ex message thrown
 	// output: ex message thrown
 	public void testValidateFrequency004() {
 		try {
-			assertFalse(Publication.validateFrequency("DailyPublicationFrequencyIsTooLong"));
+			assertFalse(Publication.validateFrequency("DailyPublicationFrequencyIsTooLonghect jrejiorhiggri"));
 		} catch (NewsAgentExceptionHandler e) {
-			assertEquals("The Frequency is invalid. Please enter a Frequency between 5 and 20 characters.",
+			assertEquals("The Frequency is invalid. Please enter a Frequency between 5 and 50 characters.",
 					e.getMessage());
 		}
 	}

@@ -1,12 +1,10 @@
 package matthew;
 
-import java.util.Random;
-import java.util.Scanner;
 
-/*
- * 
- * this class is being used for a example at the current time
- * i will save it somewhere else later.*/
+//developer. Matthew devlin
+
+import java.sql.SQLException;
+import java.util.Scanner;
 
 public class OrderBookcLine {
 	public static void main(String[] args) throws NewsAgentExceptionHandler {
@@ -22,273 +20,314 @@ public class OrderBookcLine {
 		System.out.println("|                                                       |");
 		System.out.println("|  1. Create Order Book.                                |");
 		System.out.println("|  2. View All Order Books.                             |");
-		System.out.println("|  3. View Select Order Book.                           |");
-		System.out.println("|  4. Update Order Book.                                |");
-		System.out.println("|  5. Delete Order Book.                                |");
-		System.out.println("|  6. Exit             .                                |");
+		System.out.println("|  3. Update Order Book.                                |");
+		System.out.println("|  4. Delete Order Book.                                |");
+		System.out.println("|  5. Exit             .                                |");
 		System.out.println("|                                                       |");
 		System.out.println("\\-------------------------------------------------------/");
 		System.out.print("\nEnter selection from the options above: ");
-		int input = sc.nextInt();
-		switch (input) {
+		try {
+			int input = sc.nextInt();
+			switch (input) {
 
-		case 1:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-----------------create-a-Order-Book-------------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermCreate = sc.nextInt();
-			if (afermCreate == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Please-enter-the-following:--------------|");
-				System.out.print("|\n|  . Customers ID: ");
-				String customerIDInput = sc.next();
-				System.out.print("|\n|  . Publication ID: ");
-				String publicationIDInput = sc.next();
-				System.out.print("|\n|  . Order Shedule: ");
-				String orderSheduleInput = sc.next();
-				System.out.print("|\n|  . Order Price: ");
-				String orderPriceInput = sc.next();
-				System.out.println("|                                                       ");
-				System.out.println("\\-------------------------------------------------------/");
-				System.out.print("\nGenerating Order Book from the Inputs above: ");
-				Random random = new Random(System.currentTimeMillis());
-				int orderIDint = ((1 + random.nextInt(2)) * 10000 + random.nextInt(10000));
-				String orderIDinput = Integer.toString(orderIDint);
-				OrderBook.validateOrderID(orderIDinput);
-				OrderBook.validateCustomerID(customerIDInput);
-				OrderBook.validatePublicationID(publicationIDInput);
-				OrderBook.validateOrderPrice(orderPriceInput);
-				OrderBook.validateOrderShedule(orderSheduleInput);
-				OrderBook.validateCustomerAndPublicationSame(customerIDInput, publicationIDInput);
-				OrderBook inputOrderBook = new OrderBook(orderIDinput, customerIDInput, publicationIDInput,
-						orderSheduleInput, orderPriceInput);
+			case 1:
 				try {
-
-					MySQLAccess sql = new MySQLAccess();
-					boolean res = sql.insertOrderBook(inputOrderBook);
-					sql.insertOrderBook(inputOrderBook);
-
-					if (res) {
-						System.out.println("Inserted");
-					}
-					if (!res) {
-						System.out.println("not Inserted");
-					}
+					createOrderBookMenu();
+				} catch (NewsAgentExceptionHandler e) {
+					System.out.print("\n" + e.message + "\nPlease try again.\n");
+					generateOrderBookMenu();
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
 				}
-			} else if (afermCreate == 2) {
-				generateOrderBookMenu();
 
-			} else if (afermCreate != 1 || afermCreate != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}
-			sc.close();
+				break;
 
-			break;
-
-		case 2:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-----------------View-All-Order-Books------------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermViewAll = sc.nextInt();
-			if (afermViewAll == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|----------------------All-order-Books:----------------|");
-				System.out.println("\\-------------------------------------------------------/");
-				System.out.print("\nFetching All Order Books: ");
+			case 2:
 				try {
-					MySQLAccess sql = new MySQLAccess();
-					sql.printAllOrderBooks();
+					printAllOrderBookMenu();
+				} catch (NewsAgentExceptionHandler e) {
+					System.out.print("\n" + e.message + "\nPlease try again.\n");
+					generateOrderBookMenu();
+				} catch (SQLException e) {
+					System.out.print("\nPlease try again.\n");
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
 				}
-			} else if (afermViewAll == 2) {
-				generateOrderBookMenu();
 
-			} else if (afermViewAll != 1 || afermViewAll != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}
-
-			break;
-		case 3:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-----------------View-byID-Order-Books------------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermViewByID = sc.nextInt();
-			if (afermViewByID == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Please-enter-the-Order-ID----------------|");
-				System.out.println("|------------Of-Order-Book-you-wish-to-View-------------|");
-				System.out.print("|\n|  . Order ID: ");
-				String getByOrderIDInput = sc.next();
-				System.out.println("|\n|                                                       |");
-				System.out.println("\\-------------------------------------------------------/");
-				System.out.print("\nFetching Order Book from the Inputs above: ");
-				OrderBook.validateOrderID(getByOrderIDInput);
+				break;
+			case 3:
 				try {
-					MySQLAccess sql = new MySQLAccess();
+					updateByIDOrderBookMenu();
+				} catch (NewsAgentExceptionHandler e) {
+					System.out.print("\n" + e.message + "\nPlease try again.\n");
+					generateOrderBookMenu();
 
-					// Call getOrderBookById method to retrieve OrderBook by OrderID
-					boolean getByIdResult = sql.getOrderBookById(getByOrderIDInput);
-
-					if (getByIdResult) {
-						System.out.println("OrderBook retrieved successfully.");
-					} else {
-						System.out.println("Failed to retrieve OrderBook. It may not exist or there was an error.");
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				}  catch (SQLException e) {
+					System.out.print("\nPlease try again.\n");
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
+				}catch (Exception e) {
+					generateOrderBookMenu();
+					System.out.println("\n\nUnknown Error Occurred...");
 				}
-			} else if (afermViewByID == 2) {
-				generateOrderBookMenu();
 
-			} else if (afermViewByID != 1 || afermViewByID != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}
-
-			break;
-		case 4:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-----------------Update-Order-Books-ByID---------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermUpdate = sc.nextInt();
-			if (afermUpdate == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Please-enter-the-Order-ID----------------|");
-				System.out.println("|-----and-Details-of-Order-Book-you-wish-to-Update------|");
-				System.out.print("|\n|  . Order ID: ");
-				String uporderIDInput = sc.next();
-				System.out.print("|\n|  . Customers ID: ");
-				String upcustomerIDInput = sc.next();
-				System.out.print("|\n|  . Publication ID: ");
-				String uppublicationIDInput = sc.next();
-				System.out.print("|\n|  . Order Shedule: ");
-				String uporderSheduleInput = sc.next();
-				System.out.print("|\n|  . Order Price: ");
-				String uporderPriceInput = sc.next();
-				System.out.println("|                                                       ");
-				System.out.println("\\-------------------------------------------------------/");
-				System.out.print("\nGenerating Order Book from the Inputs above: ");
+				break;
+			case 4:
 
 				try {
-					OrderBook updateOrderBook = new OrderBook();
-					MySQLAccess sql = new MySQLAccess();
-					OrderBook.validateOrderID(uporderIDInput);
-					OrderBook.validateCustomerID(upcustomerIDInput);
-					OrderBook.validatePublicationID(uppublicationIDInput);
-					OrderBook.validateOrderPrice(uporderPriceInput);
-					OrderBook.validateOrderShedule(uporderSheduleInput);
-					OrderBook.validateCustomerAndPublicationSame(upcustomerIDInput, uppublicationIDInput);
-					updateOrderBook = new OrderBook(uporderIDInput, upcustomerIDInput, uppublicationIDInput,
-							uporderSheduleInput, uporderPriceInput);
-
-					// Insert an OrderBook
-					sql.updateOrderBook(updateOrderBook);
-
-					// Update the OrderBook by OrderID
-					boolean updateResult = sql.updateOrderBook(updateOrderBook);
-					if (updateResult) {
-						System.out.println("OrderBook updated successfully.");
-					} else {
-						System.out.println("Failed to update OrderBook.");
-					}
+					deleteByIDOrderBookMenu();
+				} catch (NewsAgentExceptionHandler e) {
+					System.out.print("\n" + e.message + "\nPlease try again.\n");
+					generateOrderBookMenu();
+				} catch (SQLException e) {
+					System.out.print("\nPlease try again.\n");
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.print("\nPlease try again.\n");
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
 				}
-			} else if (afermUpdate == 2) {
-				generateOrderBookMenu();
+				break;
 
-			} else if (afermUpdate != 1 || afermUpdate != 2) {
-				System.out.println("please enter a valid input on screen.");
-			}
+			default:
 
-			break;
-		case 5:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|----------------Are-you-sure-you-want-to---------------|");
-			System.out.println("|-----------------Delete-Order-Books-ByID---------------|");
-			System.out.println("|  1. Yes.                                              |");
-			System.out.println("|  2. No.                                               |");
-			System.out.println("|                                                       |");
-			System.out.println("\\-------------------------------------------------------/");
-			System.out.print("\nEnter selection from the options above: ");
-			int afermDelete = sc.nextInt();
-			if (afermDelete == 1) {
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Please-enter-the-Order-ID----------------|");
-				System.out.println("|----------Of-Order-Book-you-wish-to-Delete-------------|");
-				System.out.print("|\n|  . Order ID: ");
-				String deleteOrderIDInput = sc.next();
-				System.out.println("|\n|                                                       |");
-				System.out.println("\\-------------------------------------------------------/");
 				try {
-					// Creating an instance of MySQLAccess
-					MySQLAccess sql = new MySQLAccess();
-					OrderBook.validateOrderID(deleteOrderIDInput);
-					boolean deleteResult = sql.deleteOrderBook(deleteOrderIDInput);
-
-					if (deleteResult) {
-						System.out.println("OrderBook deleted successfully.");
-					} else {
-						System.out.println("Failed to delete OrderBook.");
-					}
+					problemOrderBoookMenu();
+				} catch (NewsAgentExceptionHandler e) {
+					System.out.print("\n" + e.message + "\nPlease try again.\n");
+					generateOrderBookMenu();
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.print("\n" + e.getMessage() + "\nPlease try again.\n");
+					System.out.println("\n\nunkown Error Occured...");
+					generateOrderBookMenu();
 				}
-			} else if (afermDelete == 2) {
-				generateOrderBookMenu();
-
-			} else if (afermDelete != 1 || afermDelete != 2) {
-				System.out.println("please enter a valid input on screen.");
 			}
-			break;
-
-		default:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Something-has-gone-wrong-----------------|");
-			System.out.println("|----------Please-exit-to-the-previous-panel------------|");
-			System.out.println("|  1. Exit                                              |");
-			System.out.println("\\-------------------------------------------------------/");
-			int exit = sc.nextInt();
-			if (exit == 1) {
-				generateOrderBookMenu();
-			} else
-				System.out.println("please enter a valid input on screen.");
+		} catch (Exception e) {
+			System.out.println("not a valid input");
+			generateOrderBookMenu();
 
 		}
+		sc.close();
+	}
+	// problem still acuring
 
+	public static void createOrderBookMenu() throws NewsAgentExceptionHandler {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("  _____________________________________________________");
+		System.out.println(" /                                                     \\");
+		System.out.println("|----------------Are-you-sure-you-want-to---------------|");
+		System.out.println("|-------------------create-a-OrderBook------------------|");
+		System.out.println("|  1. Yes.                                              |");
+		System.out.println("|  2. No.                                               |");
+		System.out.println("|                                                       |");
+		System.out.println("\\-------------------------------------------------------/");
+		System.out.print("\nEnter selection from the options above: ");
+		int afermCreate = sc.nextInt();
+		if (afermCreate == 1) {
+			System.out.println("  _____________________________________________________");
+			System.out.println(" /                                                     \\");
+			System.out.println("|--------------Please-enter-the-OrderBook---------------|");
+			System.out.println("|                                                       |");
+			System.out.print("|\n|  . Customers ID: ");
+			String cCustomerIDInput = sc.next();
+			System.out.print("|\n|  . Publication ID: ");
+			String cPublicationIDInput = sc.next();
+			System.out.print("|\n|  . Order Shedule: ");
+			String cOrderSheduleInput = sc.next();
+			System.out.print("|\n|  . Order Price: ");
+			String cOrderPriceInput = sc.next();
+			System.out.println("|                                                      ");
+			System.out.println("\\-------------------------------------------------------/");
+			System.out.print("\nGenerating Order Book from the Inputs above: ");
+
+			
+			OrderBook.validateCustomerID(cCustomerIDInput);
+			OrderBook.validatePublicationID(cPublicationIDInput);
+			OrderBook.validateOrderShedule(cOrderSheduleInput);
+			OrderBook.validateOrderPrice(cOrderPriceInput);
+			OrderBook.validateCustomerAndPublicationSame(cCustomerIDInput, cPublicationIDInput);
+			String cOrderID = cCustomerIDInput;
+			OrderBook orderBook = new OrderBook();
+			orderBook = new OrderBook(cOrderID,cCustomerIDInput,cPublicationIDInput,cOrderPriceInput,cOrderSheduleInput);
+			
+			try {
+
+				MySQLAccess sql = new MySQLAccess();
+				boolean res = sql.insertOrderBook(orderBook);
+				sql.insertOrderBook(orderBook);
+
+				if (res) {
+					System.out.println("Inserted");
+				}
+				if (!res) {
+					System.out.println("not Inserted");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (afermCreate == 2) {
+			generateOrderBookMenu();
+		} else if (afermCreate != 1 || afermCreate != 2) {
+			System.out.println("please enter a valid input on screen.");
+		}
+		sc.close();
+	}
+
+	public static void printAllOrderBookMenu() throws NewsAgentExceptionHandler, SQLException ,Exception {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("  _____________________________________________________");
+		System.out.println(" /                                                     \\");
+		System.out.println("|----------------Are-you-sure-you-want-to---------------|");
+		System.out.println("|-------------------View-All-OberBook-------------------|");
+		System.out.println("|  1. Yes.                                              |");
+		System.out.println("|  2. No.                                               |");
+		System.out.println("|                                                       |");
+		System.out.println("\\-------------------------------------------------------/");
+		System.out.print("\nEnter selection from the options above: ");
+		int afermViewAll = sc.nextInt();
+		if (afermViewAll == 1) {
+			System.out.println("  _____________________________________________________");
+			System.out.println(" /                                                     \\");
+			System.out.println("|----------------------All-OrderBooks:-------------------|");
+			System.out.println("\\-------------------------------------------------------/");
+			System.out.print("\nFetching All Order Books: ");
+				MySQLAccess sql = new MySQLAccess();
+				sql.printAllOrderBooks();
+
+		} else if (afermViewAll == 2) {
+			generateOrderBookMenu();
+		} else if (afermViewAll != 1 || afermViewAll != 2) {
+			System.out.println("please enter a valid input on screen.");
+		}
+		sc.close();
+
+	}
+
+
+
+	public static void updateByIDOrderBookMenu() throws NewsAgentExceptionHandler , SQLException , Exception{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("  _____________________________________________________");
+		System.out.println(" /                                                     \\");
+		System.out.println("|----------------Are-you-sure-you-want-to---------------|");
+		System.out.println("|-----------------Update-OrderBook-ByID-----------------|");
+		System.out.println("|  1. Yes.                                              |");
+		System.out.println("|  2. No.                                               |");
+		System.out.println("|                                                       |");
+		System.out.println("\\-------------------------------------------------------/");
+		System.out.print("\nEnter selection from the options above: ");
+		int afermUpdate = sc.nextInt();
+		if (afermUpdate == 1) {
+			System.out.println("  _____________________________________________________");
+			System.out.println(" /                                                     \\");
+			System.out.println("|--------------Please-enter-the-Order-ID----------------|");
+			System.out.println("|-----and-Details-of-Order-Book-you-wish-to-Update------|");
+			System.out.print("|\n|  . Order ID: ");
+			String uporderIDInput = sc.next();
+			System.out.print("|\n|  . Customers ID: ");
+			String upcustomerIDInput = sc.next();
+			System.out.print("|\n|  . Publication ID: ");
+			String uppublicationIDInput = sc.next();
+			System.out.print("|\n|  . Order Shedule: ");
+			String uporderSheduleInput = sc.next();
+			System.out.print("|\n|  . Order Price: ");
+			String uporderPriceInput = sc.next();
+			System.out.println("|                                                       ");
+			System.out.println("\\-------------------------------------------------------/");
+			System.out.print("\nGenerating updated customer from the Inputs above: ");
+
+			OrderBook orderBook = new OrderBook();
+			MySQLAccess sql = new MySQLAccess();
+			OrderBook.validateOrderID(uporderIDInput);
+			OrderBook.validatePublicationID(uppublicationIDInput);
+			OrderBook.validateCustomerID(upcustomerIDInput);
+			OrderBook.validateOrderPrice(uporderPriceInput);
+			OrderBook.validateOrderShedule(uporderSheduleInput);
+			OrderBook.validateCustomerAndPublicationSame(upcustomerIDInput, uppublicationIDInput);
+			orderBook = new OrderBook(uporderIDInput,upcustomerIDInput,uppublicationIDInput,uporderPriceInput,uporderSheduleInput);
+			
+
+				// Insert an OrderBook
+				sql.updateOrderBook(orderBook);
+
+				// Update the OrderBook by OrderID
+				boolean updateResult = sql.updateOrderBook(orderBook);
+				if (updateResult) {
+					System.out.println("orderBook updated successfully.");
+				} else {
+					System.out.println("Failed to update orderBook.");
+				}
+		} else if (afermUpdate == 2) {
+			generateOrderBookMenu();
+
+		} else if (afermUpdate != 1 || afermUpdate != 2) {
+			System.out.println("please enter a valid input on screen.");
+		}
+		sc.close();
+
+	}
+
+	public static void deleteByIDOrderBookMenu() throws NewsAgentExceptionHandler, SQLException, Exception {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("  _____________________________________________________");
+		System.out.println(" /                                                     \\");
+		System.out.println("|----------------Are-you-sure-you-want-to---------------|");
+		System.out.println("|-----------------Delete-OrderBook-ByID-----------------|");
+		System.out.println("|  1. Yes.                                              |");
+		System.out.println("|  2. No.                                               |");
+		System.out.println("|                                                       |");
+		System.out.println("\\-------------------------------------------------------/");
+		System.out.print("\nEnter selection from the options above: ");
+		int afermDelete = sc.nextInt();
+		if (afermDelete == 1) {
+			System.out.println("  _____________________________________________________");
+			System.out.println(" /                                                     \\");
+			System.out.println("|--------------Please-enter-the-OrderBook-ID-------------|");
+			System.out.println("|-----------Of-OrderBook-you-wish-to-Delete--------------|");
+			System.out.print("|\n|  . Order ID: ");
+			String deleteOrderIDInput = sc.next();
+			System.out.println("|\n|                                                       |");
+			System.out.println("\\-------------------------------------------------------/");
+
+			// Creating an instance of MySQLAccess
+			MySQLAccess sql = new MySQLAccess();
+			OrderBook.validateOrderID(deleteOrderIDInput);
+
+			boolean deleteResult = sql.deleteOrderBook(deleteOrderIDInput);
+
+			if (deleteResult) {
+				System.out.println("OrderBook deleted successfully.");
+			} else {
+				System.out.println("Failed to delete OrderBook.");
+			}
+		} else if (afermDelete == 2) {
+			generateOrderBookMenu();
+
+		} else if (afermDelete != 1 || afermDelete != 2) {
+			System.out.println("please enter a valid input on screen.");
+		}
+		sc.close();
+	}
+
+	public static void problemOrderBoookMenu() throws NewsAgentExceptionHandler {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("  _____________________________________________________");
+		System.out.println(" /                                                     \\");
+		System.out.println("|--------------Something-has-gone-wrong-----------------|");
+		System.out.println("|----------Please-exit-to-the-previous-panel------------|");
+		System.out.println("|  . Exit                                              |");
+		System.out.println("\\-------------------------------------------------------/");
+		int exit = sc.nextInt();
+		if (exit == 1) {
+			generateOrderBookMenu();
+		} else
+			generateOrderBookMenu();
+		sc.close();
 	}
 
 }

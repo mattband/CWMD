@@ -1,25 +1,39 @@
 package matthew;
 
+
+//developer. Matthew devlin
+
 public class Customer {
 
-	/*
-	 * setting up a product skeleton for orderbook creating empty methods then
-	 * develope testcases for those methods ie. boundrey value analisis. etcetera
-	 * will be about 30 -35 tests total for hole class working on intergration with
-	 * command line next the variables are subject to change. then database.
-	 */
+
 
 	// initializing variables
 	private String customerID; // length 5
 	private String customerName; // length 1 - 20
-	private String addressID; // same as customer ID
+	private String addressStreet; // 150 
 	private String phoneNumber;// length 10
-	private String PublicationID; // same as customerid
+	private String publicationID; // same as customerid
+
 
 	// getters and setters for all variables within the customer class.
+	
 	public String getCustomerID() {
 		return customerID;
 	}
+
+
+
+	public String getAddressStreet() {
+		return addressStreet;
+	}
+
+
+
+	public void setAddressStreet(String addressStreet) {
+		this.addressStreet = addressStreet;
+	}
+
+
 
 	public void setCustomerID(String customerID) {
 		this.customerID = customerID;
@@ -33,13 +47,6 @@ public class Customer {
 		this.customerName = customerName;
 	}
 
-	public String getAddressID() {
-		return addressID;
-	}
-
-	public void setAddressID(String addressID) {
-		this.addressID = addressID;
-	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -49,24 +56,28 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 	}
 
+
+
 	public String getPublicationID() {
-		return PublicationID;
+		return publicationID;
 	}
 
+
+
 	public void setPublicationID(String publicationID) {
-		PublicationID = publicationID;
+		this.publicationID = publicationID;
 	}
+
+
 
 	// constructor for cerating customer and validating that all elements are
 	// legal.
-	public Customer(String customerID, String customerName, String addressID, String phoneNumber,
-			String publicationID) {
-		super();
+	public Customer(String customerID, String customerName,  String phoneNumber, String addressStreet,String publicationID ) {
 		this.customerID = customerID;
 		this.customerName = customerName;
-		this.addressID = addressID;
 		this.phoneNumber = phoneNumber;
-		PublicationID = publicationID;
+		this.addressStreet = addressStreet;
+		this.publicationID = publicationID;
 	}
 
 	// empty constructor
@@ -101,6 +112,62 @@ public class Customer {
 		return customerID.length() == 5;
 	}
 
+
+	// method that will check if validate that the customerName is valid
+	public static boolean validateCustomerName(String customerName) throws NewsAgentExceptionHandler {
+		// Check if customerName is empty
+		if (customerName.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid customerName.");
+		}
+
+		// Check if customerName length is within the valid range (1 to 20 characters)
+		if (customerName.length() <= 1 || customerName.length() > 20) {
+			throw new NewsAgentExceptionHandler(
+					"The customerName is invalid. Please enter a name between 1 and 20 characters.");
+		}
+
+		// Returning true if the customerName is within the valid range
+		return customerName.length() > 1 && customerName.length() <= 20;
+	}
+
+	// method that will check if validate that the phoneNumber is valid
+	public static boolean validatePhoneNumber(String phoneNumber) throws NewsAgentExceptionHandler {
+		// Check if phoneNumber is empty
+		if (phoneNumber.isEmpty()) {
+			throw new NewsAgentExceptionHandler("Please enter a valid phoneNumber.");
+		}
+
+		// Check if phoneNumber length is exactly 10 characters
+		if (phoneNumber.length() != 10) {
+			throw new NewsAgentExceptionHandler("The phoneNumber is invalid. Please enter a 10-digit phone number.");
+		}
+
+		// Check if phoneNumber contains only digits
+		if (!phoneNumber.matches("\\d+")) {
+			throw new NewsAgentExceptionHandler(
+					"The phoneNumber is invalid. Please enter a valid numeric phone number.");
+		}
+
+		// Returning true if the phoneNumber is valid
+		return true;
+	}
+
+	// method that will check if validate that the address is valid
+	public static boolean validateAddress(String addressStreet) throws NewsAgentExceptionHandler {
+	    // Check if address is empty
+	    if (addressStreet.isEmpty()) {
+	        throw new NewsAgentExceptionHandler("Please enter a valid address.");
+	    }
+
+	    // Check if address length is within the valid range (1 to 150 characters)
+	    if (addressStreet.length() <= 1 || addressStreet.length() > 150) {
+	        throw new NewsAgentExceptionHandler(
+	                "The address is invalid. Please enter an address between 1 and 150 characters.");
+	    }
+
+	    // Returning true if the address is within the valid range
+	    return addressStreet.length() > 1 && addressStreet.length() <= 150;
+	}
 	// method that will check if validate that the publicationID is valid
 	public static boolean validatePublicationID(String publicationID) throws NewsAgentExceptionHandler {
 		// Check if publicationID is empty
@@ -128,70 +195,8 @@ public class Customer {
 		return publicationID.length() == 5;
 	}
 
-	// method that will check if validate that the customerName is valid
-	public static boolean validateCustomerName(String customerName) throws NewsAgentExceptionHandler {
-		// Check if customerName is empty
-		if (customerName.isEmpty()) {
-			throw new NewsAgentExceptionHandler("Please enter a valid customerName.");
-		}
 
-		// Check if customerName length is within the valid range (1 to 20 characters)
-		if (customerName.length() <= 1 || customerName.length() > 20) {
-			throw new NewsAgentExceptionHandler(
-					"The customerName is invalid. Please enter a name between 1 and 20 characters.");
-		}
 
-		// Returning true if the customerName is within the valid range
-		return customerName.length() < 1 && customerName.length() <= 20;
-	}
 
-	// method that will check if validate that the phoneNumber is valid
-	public static boolean validatePhoneNumber(String phoneNumber) throws NewsAgentExceptionHandler {
-		// Check if phoneNumber is empty
-		if (phoneNumber.isEmpty()) {
-			throw new NewsAgentExceptionHandler("Please enter a valid phoneNumber.");
-		}
-
-		// Check if phoneNumber length is exactly 10 characters
-		if (phoneNumber.length() != 10) {
-			throw new NewsAgentExceptionHandler("The phoneNumber is invalid. Please enter a 10-digit phone number.");
-		}
-
-		// Check if phoneNumber contains only digits
-		if (!phoneNumber.matches("\\d+")) {
-			throw new NewsAgentExceptionHandler(
-					"The phoneNumber is invalid. Please enter a valid numeric phone number.");
-		}
-
-		// Returning true if the phoneNumber is valid
-		return true;
-	}
-
-	// method that will check if validate that the addressID is valid
-	public static boolean validateAddressID(String addressID) throws NewsAgentExceptionHandler {
-		// Check if addressID is empty
-		if (addressID.isEmpty()) {
-			throw new NewsAgentExceptionHandler("Please enter a valid addressID.");
-		}
-
-		// Try to parse the addressID as an integer
-		try {
-			int addressIDTest = Integer.parseInt(addressID);
-
-			// Check if the parsed integer is a 5-digit number
-			if (addressIDTest < 10000 || addressIDTest > 99999) {
-				throw new NewsAgentExceptionHandler(
-						"The address ID is invalid. Please enter a correct 5-digit address ID.");
-			}
-
-		} catch (NumberFormatException e) {
-			// Handle the case where customerID is not a valid integer
-			throw new NewsAgentExceptionHandler(
-					"The address ID is not a valid integer. Please enter a correct 5-digit address ID.");
-		}
-
-		// Returning true if the addressID is within the valid ranges
-		return addressID.length() == 5;
-	}
 
 }

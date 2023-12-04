@@ -1,5 +1,8 @@
 package matthew;
 
+
+//developer. Matthew devlin
+
 public class Invoice {
 
 	private String invoiceID;
@@ -179,12 +182,12 @@ public class Invoice {
         }
 
         // Check if invoiceMessage length is within the valid range (10 to 100 characters)
-        if (invoiceMessage.length() < 10 || invoiceMessage.length() > 100) {
+        if (invoiceMessage.length() < 10 || invoiceMessage.length() > 150) {
             throw new NewsAgentExceptionHandler("The invoiceMessage is invalid. Please enter a message between 10 and 100 characters.");
         }
 
         // Returning true if the invoiceMessage is within the valid range
-        return invoiceMessage.length() >= 10 && invoiceMessage.length() <=100;
+        return invoiceMessage.length() >= 10 && invoiceMessage.length() <=150;
     }
     
     // method that will check if validate that the Price is valid

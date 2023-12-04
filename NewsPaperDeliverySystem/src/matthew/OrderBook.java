@@ -1,14 +1,9 @@
 package matthew;
 
 
+// developer. Matthew devlin
 public class OrderBook {
 
-	/*
-	 * setting up a product skeleton for orderbook creating empty methods then
-	 * develope testcases for those methods ie. boundrey value analisis. etcetera
-	 * will be about 30 -35 tests total for hole class working on intergration with
-	 * command line next the variables are subject to change. then database.
-	 */
 
 	// initializing variables
 	private String orderID;
@@ -65,15 +60,16 @@ public class OrderBook {
 
 	// constructor for cerating order book and validating that all elements are
 	// legal.
-	public OrderBook(String orderID, String customerID, String publicationID, String orderShedule,String orderPrice)
+	public OrderBook(String orderID, String customerID, String publicationID, String orderPrice, String orderShedule)
 			throws NewsAgentExceptionHandler {
 		
 		
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.publicationID = publicationID;
-		this.orderSchedule = orderShedule;
 		this.orderPrice = orderPrice;
+		this.orderSchedule = orderShedule;
+
 	}
 
 	// empty constructor

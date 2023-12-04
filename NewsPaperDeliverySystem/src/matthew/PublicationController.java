@@ -1,4 +1,5 @@
 package matthew;
+//developer. Matthew devlin
 
 public interface PublicationController {
 	boolean updatePublication(Publication publication);

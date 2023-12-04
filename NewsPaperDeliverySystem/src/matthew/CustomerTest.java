@@ -1,14 +1,13 @@
 package matthew;
 
+
+//developer. Matthew devlin
 import junit.framework.TestCase;
 
 public class CustomerTest extends TestCase {
 	
 	
-	/*
-	 * junit 3 im using. advised not to code until the product skeleton and junit
-	 * testcases for each methods are set up for your classes.
-	 */
+
 	
 	
 	// test number:1
@@ -62,59 +61,6 @@ public class CustomerTest extends TestCase {
             fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
         } catch (NewsAgentExceptionHandler e) {
             assertEquals("Please enter a valid customerID.", e.getMessage());
-        }
-    }
-	// test number:1
-	// test obj: Test case for valid publication ID
-	// inputs: "12345"
-	// ex output: true
-	// output: true
-    public void testValidatePublicationID001() {
-        try {
-            boolean result = Customer.validatePublicationID("12345");
-            assertTrue(result);
-        } catch (NewsAgentExceptionHandler e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-    }
-
-	// test number:2
-	// test obj:Test case for invalid Publication ID (not a number)
-	// inputs: "abcde"
-	// ex output: ex thrown message
-	// output: ex thrown message
-    public void testValidatePublicationID002() {
-        try {
-            Customer.validatePublicationID("abcde");
-            fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
-        } catch (NewsAgentExceptionHandler e) {
-            assertEquals("The publication ID is not a valid integer. Please enter a correct 5-digit publication ID.", e.getMessage());
-        }
-    }
-	// test number:3
-	// test obj:Test case for invalid publication ID (not 5 digits)
-	// inputs: "123456"
-	// ex output: ex thrown message
-	// output: ex thrown message
-    public void testValidatePublicationID003() {
-        try {
-            Customer.validatePublicationID("123456");
-            fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
-        } catch (NewsAgentExceptionHandler e) {
-            assertEquals("The publication ID is invalid. Please enter a correct 5-digit publication ID.", e.getMessage());
-        }
-    }
-	// test number:4
-	// test obj:Test case for invalid publication ID (empty)
-	// inputs: ""
-	// ex output: ex thrown message
-	// output: ex thrown message
-    public void testValidatePublicationID004() {
-        try {
-            Customer.validatePublicationID("");
-            fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
-        } catch (NewsAgentExceptionHandler e) {
-            assertEquals("Please enter a valid publicationID.", e.getMessage());
         }
     }
     
@@ -255,6 +201,123 @@ public class CustomerTest extends TestCase {
         }
     }
     
-    
+    // test number:1
+    // test obj: Test case for valid Address
+    // inputs: "123 Main Street, City"
+    // ex output: true
+    // output: true
+    public void testValidateAddress001() {
+        try {
+            assertTrue(Customer.validateAddress("123 Main Street, City"));
+        } catch (NewsAgentExceptionHandler e) {
+            fail("Unexpected exception: " + e.getMessage());
+        }
+    }
 
+    // test number:2
+    // test obj: Test case for empty Address value
+    // inputs: ""
+    // ex output: ex message thrown
+    // output: ex message thrown
+    public void testValidateAddress002() {
+        try {
+            assertFalse(Customer.validateAddress(""));
+        } catch (NewsAgentExceptionHandler e) {
+            assertEquals("Please enter a valid address.", e.getMessage());
+        }
+    }
+
+    // test number:3
+    // test obj: Test case for Address too short
+    // inputs: "A"
+    // ex output: ex message thrown
+    // output: ex message thrown
+    public void testValidateAddress003() {
+        try {
+            assertFalse(Customer.validateAddress("A"));
+        } catch (NewsAgentExceptionHandler e) {
+            assertEquals("The address is invalid. Please enter an address between 1 and 150 characters.", e.getMessage());
+        }
+    }
+
+    // test number:4
+    // test obj: Test case for Address too long
+    // inputs: "ThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddress"
+    // ex output: ex message thrown
+    // output: ex message thrown
+    public void testValidateAddress004() {
+        try {
+            assertFalse(Customer.validateAddress("ThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddressThisIsAVeryLongAddress"));
+        } catch (NewsAgentExceptionHandler e) {
+            assertEquals("The address is invalid. Please enter an address between 1 and 150 characters.", e.getMessage());
+        }
+    }
+
+    // test number:5
+    // test obj: Test case for Address within boundary
+    // inputs: "456 Oak Street"
+    // ex output: true
+    // output: true
+    public void testValidateAddressBoundary() {
+        try {
+            assertTrue(Customer.validateAddress("456 Oak Street"));
+        } catch (NewsAgentExceptionHandler e) {
+            fail("Unexpected exception: " + e.getMessage());
+        }
+    }
+    
+    
+	// test number:1
+	// test obj: Test case for valid publication ID
+	// inputs: "12345"
+	// ex output: true
+	// output: true
+    public void testValidatePublicationID001() {
+        try {
+            boolean result = Customer.validatePublicationID("12345");
+            assertTrue(result);
+        } catch (NewsAgentExceptionHandler e) {
+            fail("Unexpected exception: " + e.getMessage());
+        }
+    }
+
+	// test number:2
+	// test obj:Test case for invalid Publication ID (not a number)
+	// inputs: "abcde"
+	// ex output: ex thrown message
+	// output: ex thrown message
+    public void testValidatePublicationID002() {
+        try {
+            Customer.validatePublicationID("abcde");
+            fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
+        } catch (NewsAgentExceptionHandler e) {
+            assertEquals("The publication ID is not a valid integer. Please enter a correct 5-digit publication ID.", e.getMessage());
+        }
+    }
+	// test number:3
+	// test obj:Test case for invalid publication ID (not 5 digits)
+	// inputs: "123456"
+	// ex output: ex thrown message
+	// output: ex thrown message
+    public void testValidatePublicationID003() {
+        try {
+            Customer.validatePublicationID("123456");
+            fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
+        } catch (NewsAgentExceptionHandler e) {
+            assertEquals("The publication ID is invalid. Please enter a correct 5-digit publication ID.", e.getMessage());
+        }
+    }
+	// test number:4
+	// test obj:Test case for invalid publication ID (empty)
+	// inputs: ""
+	// ex output: ex thrown message
+	// output: ex thrown message
+    public void testValidatePublicationID004() {
+        try {
+            Customer.validatePublicationID("");
+            fail("Expected NewsAgentExceptionHandler, but no exception was thrown.");
+        } catch (NewsAgentExceptionHandler e) {
+            assertEquals("Please enter a valid publicationID.", e.getMessage());
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package matthew;
 
+//developer. Matthew devlin
+
 import junit.framework.TestCase;
 
 public class InvoiceTest extends TestCase {
@@ -379,7 +381,7 @@ public class InvoiceTest extends TestCase {
     // output: ex message thrown
     public void testValidateInvoiceMessage004() {
         try {
-            String longMessage = "ThisIsAReallyLongMessageThatExceedsTheMaximumLengthOfOneHundredCharactersInOrderToTriggerAnException1";
+            String longMessage = "ThisIsAReallyLongMessageThatExceedsTheMaximumLengthOfOneHundredCharactersInOrderToTriggerAnException150morecharacterstoaddtothelinefortesting1234567890";
             Invoice.validateInvoiceMessage(longMessage);
             fail("Expected exception not thrown.");
         } catch (NewsAgentExceptionHandler e) {
