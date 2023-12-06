@@ -1,6 +1,10 @@
 package matthew;
 
 import junit.framework.TestCase;
+import static org.eclipse.persistence.jpa.jpql.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationTest extends TestCase {
 

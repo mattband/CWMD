@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Admin;
+import Login.LoginCommandLine;
 import Newsagent.Newsagent;
+import User.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
@@ -13,7 +15,7 @@ import java.util.Scanner;
  * @author cianf
  */
 public class AdminCl{
-public static void main(String[] args) throws Exception {
+public static void mainMethod() throws Exception {
 		generateNewsagentMenu();
 
 	}
@@ -29,7 +31,7 @@ public static void main(String[] args) throws Exception {
 		
 		System.out.println("  _____________________________________________________");
 		System.out.println(" /                                                     \\");
-		System.out.println("|----------------Newsagent-Menu-Options:---------------|");
+		System.out.println("|----------------Admin-Menu-Options:---------------|");
 		System.out.println("|                                                       |");
 		System.out.println("|  1. Create Newsagent.                                 |");
 		System.out.println("|  2. View All Newsagents.                              |");                                
@@ -59,14 +61,20 @@ public static void main(String[] args) throws Exception {
 				System.out.println("|--------------Please-enter-the-following:--------------|");
 				System.out.print("|\n|  . Newsagent ID: ");
 				String newsagentIDInput = sc.next();
-				System.out.print("|\n|  . Newsagent Password: ");
-				String newsagentPasswordInput = sc.next();
+                                                          Newsagent newAgentId = new Newsagent();  
+                                                          newAgentId.setId(newsagentIDInput);
+                                
+				System.out.print("|\n|  . Newsagent user id: ");
+				String newsagentUserIdInput = sc.next();
+                                                          User newAgentUserId = new User();
+                                                          newAgentUserId.setUserId(newsagentUserIdInput);
+                                                          
 				System.out.println("|                                                       ");
 				System.out.println("\\-------------------------------------------------------/");
 				System.out.print("\nCreating a Newsagent from the Inputs above: ");
 				try {
 
-                                    Newsagent newAgent = new Newsagent(newsagentIDInput, newsagentPasswordInput);
+                                    Newsagent newAgent = new Newsagent(newsagentIDInput, newAgentUserId);
                                     
                                     boolean res = create.insertNewsagent(newAgent);
 	
@@ -142,8 +150,11 @@ public static void main(String[] args) throws Exception {
                             System.out.println("|--------------Please-enter-the-following:--------------|");
                             System.out.print("|\n|  . Newsagent ID: ");
                             String newsagentIDInput = sc.next();
-                            System.out.print("|\n|  . Newsagent Password: ");
-                            String newsagentPasswordInput = sc.next();
+                            System.out.print("|\n|  . Newsagent user id: ");
+                            String newsagentUserIdInput = sc.next();
+                            User newAgentId = new User();
+                            newAgentId.setUserId(newsagentUserIdInput);
+                            
                             System.out.println("|                                                       ");
                             System.out.println("\\-------------------------------------------------------/");
                             System.out.println("\\-------------------------------------------------------/");
@@ -151,9 +162,9 @@ public static void main(String[] args) throws Exception {
           
 	        try {
                     
-	            Newsagent updateAgent = new Newsagent();
+	            Newsagent updateAgent = new Newsagent(newsagentIDInput, newAgentId);
                     updateAgent.setId(newsagentIDInput);
-                    updateAgent.setPassword(newsagentPasswordInput);
+                    updateAgent.setUserId(newAgentId);
 	            boolean updateRecord = update.updateNewsagent(updateAgent);
 
 	            if (updateRecord == true) {
@@ -215,18 +226,8 @@ public static void main(String[] args) throws Exception {
 			break;
 
 		default:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Something-has-gone-wrong-----------------|");
-			System.out.println("|----------Please-exit-to-the-previous-panel------------|");
-			System.out.println("|  1. Exit                                              |");
-			System.out.println("\\-------------------------------------------------------/");
-			int exit = sc.nextInt();
-			if(exit == 1) {
-				generateNewsagentMenu();
-			} else
-				System.out.println("please enter a valid input on screen.");
-
+                                           LoginCommandLine.mainMethod();
+			break;
 		}
         }while(input != 5);
 
@@ -238,11 +239,11 @@ public static void main(String[] args) throws Exception {
             while(resultSet.next()){
                 count++;
                 String id = resultSet.getString("AGENTID");
-                String password = resultSet.getString("AGENTPASSWORD");
+                String userId = resultSet.getString("USERID");
 
                 System.out.println("No: " + count);
                 System.out.println("Agent Id: " + id);
-                System.out.println("Agent password: " + password);
+                System.out.println("User id: " + userId);
             }
         }catch(SQLException e){
             e.printStackTrace();

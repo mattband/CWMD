@@ -48,9 +48,9 @@ public class DBHelper {
 
                       preparedStatement.setString(1, addingRecord.getDeliveryManId());
                       preparedStatement.setString(2, addingRecord.getPhoneNumber());
-                      preparedStatement.setInt(3, addingRecord.getDeliveryDocketId().getDeliveryDocketId());
+                      preparedStatement.setString(3, addingRecord.getDeliveryDocketId().getDeliveryDocketId());
                       preparedStatement.setString(4, addingRecord.getArea());
-                      preparedStatement.setInt(5, addingRecord.getUserId().getUserId());
+                      preparedStatement.setString(5, addingRecord.getUserId().getUserId());
                       preparedStatement.executeUpdate();
                       conn.commit();
                     }
@@ -62,7 +62,7 @@ public class DBHelper {
                }
 
                       return insertSuccessful;
-               }
+       }
         
         public boolean updateDeliveryPerson(DeliveryPerson updateRecord) {
             boolean updateSuccessful = true;
@@ -77,9 +77,9 @@ public class DBHelper {
 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(updateQuery)) {
                     preparedStatement.setString(1, updateRecord.getPhoneNumber());
-                    preparedStatement.setInt(2, updateRecord.getDeliveryDocketId().getDeliveryDocketId());
+                    preparedStatement.setString(2, updateRecord.getDeliveryDocketId().getDeliveryDocketId());
                     preparedStatement.setString(3, updateRecord.getArea());
-                    preparedStatement.setInt(4, updateRecord.getUserId().getUserId());
+                    preparedStatement.setString(4, updateRecord.getUserId().getUserId());
                     preparedStatement.setString(5, updateRecord.getDeliveryManId());
 
                     // Execute the update query
@@ -149,7 +149,7 @@ public class DBHelper {
 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(updateQuery)) {
                     preparedStatement.setString(1, deliveryDocketId.getDeliverystatus());
-                    preparedStatement.setInt(2, deliveryDocketId.getDeliveryDocketId());
+                    preparedStatement.setString(2, deliveryDocketId.getDeliveryDocketId());
 
                     // Execute the query
                     int rowsAffected = preparedStatement.executeUpdate();

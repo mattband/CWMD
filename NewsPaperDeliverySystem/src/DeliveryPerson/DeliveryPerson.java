@@ -74,10 +74,10 @@ public class DeliveryPerson {
         }
     }
     
-    public static void validateDeliveryManDeliveryDocket(int deliveryDocket) throws DeliveryPersonException{
-        if(deliveryDocket == 0){
+    public static void validateDeliveryManDeliveryDocket(String deliveryDocket) throws DeliveryPersonException{
+        if(deliveryDocket.isEmpty()){
             throw new DeliveryPersonException("Delivery person's has empty delivery docket");
-        }else if(deliveryDocket < 0){
+        }else if(deliveryDocket.length() > 10){
             throw new DeliveryPersonException("Something went wrong");
         }
     }
@@ -88,11 +88,13 @@ public class DeliveryPerson {
         }
     }
     
-    public static void validateDeliveryManUserId(int userId) throws DeliveryPersonException{
-        if(userId == 0){
-            throw new DeliveryPersonException("Delivery person's user id went wrong. Shouldn't be 0");
-        }else if(userId < 0){
-            throw new DeliveryPersonException("Delivery person's user id lesser than 0");
+    public static void validateDeliveryManUserId(String userId) throws DeliveryPersonException{
+        if(userId.isEmpty()){
+            throw new DeliveryPersonException("Delivery person's user id is empty");
+        }else if(userId.length() < 5){
+            throw new DeliveryPersonException("Delivery person's user id lesser than 5");
+        }else if(userId.length() > 5){
+            throw new DeliveryPersonException("Delivery person's user id is bigger than 5");
         }
     }
     
@@ -118,7 +120,7 @@ public class DeliveryPerson {
     
     public void updateDeliveryDocket(DeliveryDocket deliveryDocket) throws DeliveryPersonException{
         try{
-            validateDeliveryManDeliveryDocket(1);
+            validateDeliveryManDeliveryDocket(deliveryDocket.getDeliveryDocketId());
         }catch(DeliveryPersonException e){
             throw new DeliveryPersonException("Fail to update delivery person's delivery docket");
         }
@@ -138,7 +140,7 @@ public class DeliveryPerson {
     
     public void updateDeliveryManUserId(User userId) throws DeliveryPersonException{
         try{
-            validateDeliveryManUserId(1);
+            validateDeliveryManUserId(userId.getUserId());
         }catch(DeliveryPersonException e){
             throw new DeliveryPersonException("Fail to update delivery person's user id");
         }

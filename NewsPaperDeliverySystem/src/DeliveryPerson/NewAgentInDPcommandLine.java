@@ -2,6 +2,7 @@ package DeliveryPerson;
 
 import DeliveryDocket.DeliveryDocket;
 import DeliveryPerson.DBHelper;
+import Login.LoginCommandLine;
 import User.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,9 +30,9 @@ public class NewAgentInDPcommandLine {
                     count++;
                     String id = resultSet.getString("DELIVERYMANID");
                     String phoneNumber = resultSet.getString("DELIVERYPHONENUMBER");
-                    int deliveryDocketId = resultSet.getInt("DELIVERYDOCKET");
+                    String deliveryDocketId = resultSet.getString("DELIVERYDOCKET");
                     String area = resultSet.getString("AREA");
-                    int userId = resultSet.getInt("USERID");
+                    String userId = resultSet.getString("USERID");
 
                     System.out.println("No: " + count);
                     System.out.println("delivery man Id: " + id);
@@ -47,7 +48,7 @@ public class NewAgentInDPcommandLine {
         
         
         //show in the main
-        public static void main(String[] args) throws SQLException {
+        public static void mainMethod() throws SQLException, Exception {
         DBHelper dbHelper = new DBHelper();
         // Get user input
         Scanner scanner = new Scanner(System.in);
@@ -77,7 +78,7 @@ public class NewAgentInDPcommandLine {
                             String dpPhoneNumber = inserting.next();
                             
                             System.out.print("Enter delivery docket id:");
-                            int docketId = inserting.nextInt();
+                            String docketId = inserting.next();
                             DeliveryDocket dpDeliveryDocketId = new DeliveryDocket();
                             dpDeliveryDocketId.setDeliverydocketid(docketId);
                             
@@ -85,7 +86,7 @@ public class NewAgentInDPcommandLine {
                             String dpArea = inserting.next();
                             
                             System.out.print("Enter user id: ");
-                            int userId = inserting.nextInt();
+                            String userId = inserting.next();
                             User dpUserId = new User();
                             dpUserId.setUserId(userId);
                             
@@ -122,7 +123,7 @@ public class NewAgentInDPcommandLine {
                                 String dpUpdatePhoneNumber = updating.next();
 
                                 System.out.print("Enter delivery docket id:");
-                                int updateDocketId = updating.nextInt();
+                                String updateDocketId = updating.next();
                                 DeliveryDocket dpUpdateDeliveryDocketId = new DeliveryDocket();
                                 dpUpdateDeliveryDocketId.setDeliverydocketid(updateDocketId);
 
@@ -130,7 +131,7 @@ public class NewAgentInDPcommandLine {
                                 String dpUpdateArea = updating.next();
 
                                 System.out.print("Enter user id: ");
-                                int updateUserId = updating.nextInt();
+                                String updateUserId = updating.next();
                                 User dpUpdateUserId = new User();
                                 dpUpdateUserId.setUserId(updateUserId);
 
@@ -165,13 +166,9 @@ public class NewAgentInDPcommandLine {
                                         System.out.println("Record deletion unsuccessful");
                                     }
                         case 5:
-                                System.out.print("Ended");
+                                 LoginCommandLine.mainMethod();
                                 break;
-                        default:
-                            if(choice == 5){
-                                System.out.print("Ended");
-                            }
-                        System.out.println("Invalid choice. Please select a valid option.");
+                          
                 }
         }while(choice != 5);
         // Close the scanner

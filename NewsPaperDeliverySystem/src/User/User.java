@@ -1,19 +1,19 @@
 package User;
 
 public class User {
-    private int userId;
+    private String userId;
     
     public User(){}
     
-    public User(int userId){
+    public User(String userId){
         this.userId = userId;
     }
     
-    public int getUserId(){
+    public String getUserId(){
         return userId;
     }
     
-        public void setUserId(int userId){
+        public void setUserId(String userId){
                 this.userId = userId;
         }
     

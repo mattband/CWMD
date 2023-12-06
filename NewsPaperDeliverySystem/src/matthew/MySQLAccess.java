@@ -25,10 +25,13 @@ public  class MySQLAccess
 			// Attempt to establish a connection to the database
 			connect = DriverManager.getConnection(host, user, password);
 
+
 		} catch (SQLException e) {
 			// Handle any exceptions that occur during the connection process
 			e.printStackTrace();
 		}
+
+
 	}
 
 // ---------------------------------------------------------------- CRUD order book--------------------------------------------------------------------------------------------------
@@ -195,36 +198,42 @@ public  class MySQLAccess
 
 	// CRUD operations for Customer entity
 	public boolean insertCustomer(Customer customer) {
-		// Inserts a Customer into the database
-		// Returns true if the insertion is successful, false otherwise
-		boolean insertSuccessful = true;
+                        boolean insertSuccessful = true;
 
-		try {
-			if (connect == null) {
-				System.out.println("Connection is null. Cannot insert.");
-				return false;
-			}
+                        try {
+                            if (connect == null) {
+                                System.out.println("Connection is null. Cannot insert.");
+                                return false;
+                            }
 
-			// Check if the customer already exists
-			if (orderExists(customer.getCustomerID())) {
-				System.out.println("Customer with ID " + customer.getCustomerID() + " already exists. Not inserting.");
-				return false;
-			}
+                            // Check if the publicationID exists in the Publication table
+                            if (!publicationExists(customer.getPublicationID().getPublicationID())) {
+                                System.out.println("Publication with ID " + customer.getPublicationID().getPublicationID() + " does not exist. Not inserting.");
+                                return false;
+                            }
 
-			preparedStatement = connect.prepareStatement("INSERT INTO Customer VALUES (?, ?, ?, ?, ?)");
-			preparedStatement.setString(1, customer.getCustomerID());
-			preparedStatement.setString(2, customer.getCustomerName());
-			preparedStatement.setString(3, customer.getAddressID());
-			preparedStatement.setString(4, customer.getPhoneNumber());
-			preparedStatement.setString(5, customer.getPublicationID());
-			preparedStatement.executeUpdate();
-		} catch (Exception e) {
-			insertSuccessful = false;
-			e.printStackTrace();
-		}
+                            // Check if a customer with the same publication ID already exists
+                            if (customerExists(customer.getPublicationID().getPublicationID())) {
+                                System.out.println("Customer with Publication ID " + customer.getPublicationID().getPublicationID() + " already exists. Not inserting.");
+                                return false;
+                            }
 
-		return insertSuccessful;
-	}
+                            preparedStatement = connect.prepareStatement("INSERT INTO Customer VALUES (?, ?, ?, ?, ?)");
+                            preparedStatement.setString(1, customer.getCustomerID());
+                            preparedStatement.setString(2, customer.getCustomerName());
+                            preparedStatement.setString(3, customer.getAddressStreet());
+                            preparedStatement.setString(4, customer.getPhoneNumber());
+                            preparedStatement.setString(5, customer.getPublicationID().getPublicationID());
+                            preparedStatement.executeUpdate();
+                            connect.commit();
+                        } catch (Exception e) {
+                            insertSuccessful = false;
+                            e.printStackTrace();
+                        }
+
+                        return insertSuccessful;
+                    }
+
 
 	// Helper method to check if a customer with the given ID already exists
 	@SuppressWarnings("unused")
@@ -247,12 +256,13 @@ public  class MySQLAccess
 
 		try {
 			preparedStatement = connect.prepareStatement(
-					"UPDATE Customer SET CustomerId=?, CustomerName=?, AddressId=?, PhoneNumber=? , Publication = ? WHERE CustomerId=?");
+					"UPDATE Customer SET CustomerId=?, CustomerName=?, AddressStreet=?, PhoneNumber=? , PublicationID = ? WHERE CustomerId=?");
 			preparedStatement.setString(1, updateCustomer.getCustomerID());
 			preparedStatement.setString(2, updateCustomer.getCustomerName());
-			preparedStatement.setString(3, updateCustomer.getAddressID());
+			preparedStatement.setString(3, updateCustomer.getAddressStreet());
 			preparedStatement.setString(4, updateCustomer.getPhoneNumber());
-			preparedStatement.setString(5, updateCustomer.getPublicationID());
+			preparedStatement.setString(5, updateCustomer.getPublicationID().getPublicationID());
+			preparedStatement.setString(6, updateCustomer.getCustomerID());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			updateSuccessful = false;
@@ -275,9 +285,9 @@ public  class MySQLAccess
 			while (resultSet.next()) {
 				String CustomerId = resultSet.getString("CustomerId");
 				String CustomerName = resultSet.getString("CustomerName");
-				String AddressId = resultSet.getString("AddressId");
+				String AddressId = resultSet.getString("AddressStreet");
 				String PhoneNumber = resultSet.getString("PhoneNumber"); // Corrected column name
-				String PublicationId = resultSet.getString("Publication"); // Corrected column name
+				String PublicationId = resultSet.getString("PublicationID"); // Corrected column name
 
 				System.out.println("CustomerID: " + CustomerId + ", Customer Name: " + CustomerName + ", Address ID: "
 						+ AddressId + ", PhoneNumber: " + PhoneNumber + // Corrected column name
@@ -329,9 +339,9 @@ public  class MySQLAccess
 
 			if (resultSet.next()) {
 				String CustomerName = resultSet.getString("CustomerName");
-				String AddressId = resultSet.getString("AddressId");
+				String AddressId = resultSet.getString("AddressStreet");
 				String PhoneNumber = resultSet.getString("PhoneNumber");
-				String PublicationId = resultSet.getString("Publication");
+				String PublicationId = resultSet.getString("PublicationID");
 
 				System.out.println("customerID: " + customerID + ", CustomerName: " + CustomerName + ", AddressId: "
 						+ AddressId + ", PhoneNumber: " + PhoneNumber + ", PublicationId: " + PublicationId);
@@ -352,66 +362,73 @@ public  class MySQLAccess
 	public boolean insertPublication(Publication publication) {
 		boolean insertSuccessful = true;
 
-		try {
-			if (connect == null) {
-				System.out.println("Connection is null. Cannot insert.");
-				return false;
-			}
+        try {
+            if (connect == null) {
+                System.out.println("Connection is null. Cannot insert.");
+                return false;
+            }
+//
+//            // Check if the publication ID already exists
+//            if (publicationExists(publication.getPublicationID())) {
+//                System.out.println("Order with ID " + publication.getPublicationID() + " already exists. Not inserting.");
+//                return false;
+//            }
 
-			// Check if the publication ID already exists
-			if (publicationExists(publication.getPublicationID())) {
-				System.out
-						.println("Order with ID " + publication.getPublicationID() + " already exists. Not inserting.");
-				return false;
-			}
+            preparedStatement = connect.prepareStatement(
+                    "INSERT INTO Publication VALUES (?, ?, ?, ?, ?)"
+            );
+            preparedStatement.setString(1, publication.getPublicationID());
+            preparedStatement.setString(2, publication.getTitle());
+            preparedStatement.setString(3, publication.getPrice());
+            preparedStatement.setString(4, publication.getQuantity());
+            preparedStatement.setString(5, publication.getFrequency());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            insertSuccessful = false;
+            e.printStackTrace();
+        }
 
-			preparedStatement = connect.prepareStatement("INSERT INTO Publication; VALUES (?, ?, ?, ?, ?)");
-			preparedStatement.setString(1, publication.getPublicationID());
-			preparedStatement.setString(2, publication.getTitle());
-			preparedStatement.setString(3, publication.getPrice());
-			preparedStatement.setString(4, publication.getQuantity());
-			preparedStatement.setString(5, publication.getFrequency());
-			preparedStatement.executeUpdate();
-		} catch (Exception e) {
-			insertSuccessful = false;
-			e.printStackTrace();
-		}
+        return insertSuccessful;
+    }
 
-		return insertSuccessful;
-	}
+
 
 	// Helper method to check if an publication with the given ID already exists
-	private boolean publicationExists(String publicationID) {
-		try {
-			preparedStatement = connect.prepareStatement("SELECT 1 FROM Publication  WHERE PublicationId  = ?");
-			preparedStatement.setString(1, publicationID);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			return resultSet.next(); // Returns true if the publication ID exists in the database
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+    private boolean publicationExists(String publicationID) {
+        try {
+            preparedStatement = connect.prepareStatement("SELECT 1 FROM Publication  WHERE PublicationId  = ?");
+            preparedStatement.setString(1, publicationID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next(); // Returns true if the publication ID exists in the database
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
+public boolean updatePublication(Publication publication) {
+	boolean updateSuccessful = true;
+
+	try {
+		preparedStatement = connect.prepareStatement(
+				"UPDATE Publication  SET PublicationId =?, Title=?, Price =?, Quantity =? , Frequency  =? WHERE PublicationId =?");
+		preparedStatement.setString(1, publication.getPublicationID());
+		preparedStatement.setString(2, publication.getTitle());
+		preparedStatement.setString(3, publication.getPrice());
+		preparedStatement.setString(4, publication.getQuantity());
+		preparedStatement.setString(5, publication.getFrequency());
+                                preparedStatement.setString(6, publication.getPublicationID());
+		preparedStatement.executeUpdate();
+	} catch (Exception e) {
+		updateSuccessful = false;
+		e.printStackTrace(); // Add proper error handling/logging
 	}
+            return updateSuccessful;
+}
 
-	public boolean updatePublication(Publication publication) {
-		boolean updateSuccessful = true;
-
-		try {
-			preparedStatement = connect.prepareStatement(
-					"UPDATE Publication  SET PublicationId =?, Title=?, Price =?, StocKQuantity =? , Frequency  =? WHERE PublicationId =?");
-			preparedStatement.setString(1, publication.getPublicationID());
-			preparedStatement.setString(2, publication.getTitle());
-			preparedStatement.setString(3, publication.getPrice());
-			preparedStatement.setString(4, publication.getQuantity());
-			preparedStatement.setString(5, publication.getFrequency());
-			preparedStatement.executeUpdate();
-		} catch (Exception e) {
-			updateSuccessful = false;
-			e.printStackTrace(); // Add proper error handling/logging
-		}
-
-		return updateSuccessful;
-	}
 
 	public void printAllPublications() {
 		try {
@@ -427,7 +444,7 @@ public  class MySQLAccess
 				String PublicationId = resultSet.getString("PublicationId");
 				String Title = resultSet.getString("Title");
 				String Price = resultSet.getString("Price");
-				String StocKQuantity = resultSet.getString("StocKQuantity"); // Corrected column name
+				String StocKQuantity = resultSet.getString("Quantity"); // Corrected column name
 				String Frequency = resultSet.getString("Frequency"); // Corrected column name
 
 				System.out.println("PublicationId: " + PublicationId + ", Title: " + Title + ", Price: " + Price
@@ -517,13 +534,13 @@ public  class MySQLAccess
 				return false;
 			}
 
-			preparedStatement = connect.prepareStatement("INSERT INTO Invoice ; VALUES (?, ?, ?, ?, ?, ? )");
+			preparedStatement = connect.prepareStatement("INSERT INTO Invoice VALUES (?, ?, ?, ?, ?, ? )");
 			preparedStatement.setString(1, invoice.getInvoiceID());
-			preparedStatement.setString(2, invoice.getPublicationID());
-			preparedStatement.setString(3, invoice.getCustomerID());
-			preparedStatement.setString(4, invoice.getOrderID());
-			preparedStatement.setString(5, invoice.getPrice());
-			preparedStatement.setString(6, invoice.getInvoiceMessage());
+			preparedStatement.setString(2, invoice.getPublicationID().getPublicationID());
+			preparedStatement.setString(3, invoice.getCustomerID().getCustomerID());
+			preparedStatement.setString(4, invoice.getOrderID().getOrderID());
+			preparedStatement.setString(5, invoice.getInvoiceMessage());
+			preparedStatement.setString(6, invoice.getPrice());
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			insertSuccessful = false;
@@ -555,13 +572,15 @@ public  class MySQLAccess
 
 		try {
 			preparedStatement = connect.prepareStatement(
-					"UPDATE Invoice  SET InvoiceID  =?, PublicationID =?, CustomerId  =?, OrderId  =? , Price   =?, InvoiceMessage = ? WHERE InvoiceID  =?");
+					"UPDATE Invoice  SET InvoiceID  =?, PublicationID =?, CustomerId  =?, OrderId  =? , InvoiceMessage  = ?, OrderPrice = ? WHERE InvoiceID  =?");
 			preparedStatement.setString(1, invoice.getInvoiceID());
-			preparedStatement.setString(2, invoice.getPublicationID());
-			preparedStatement.setString(3, invoice.getCustomerID());
-			preparedStatement.setString(4, invoice.getOrderID());
-			preparedStatement.setString(5, invoice.getPrice());
-			preparedStatement.setString(6, invoice.getInvoiceMessage());
+			preparedStatement.setString(2, invoice.getPublicationID().getPublicationID());
+			preparedStatement.setString(3, invoice.getCustomerID().getCustomerID());
+			preparedStatement.setString(4, invoice.getOrderID().getOrderID());
+			preparedStatement.setString(5, invoice.getInvoiceMessage());
+			preparedStatement.setString(6, invoice.getPrice());
+			preparedStatement.setString(7, invoice.getInvoiceID());
+                                    
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			updateSuccessful = false;
@@ -588,8 +607,8 @@ public  class MySQLAccess
 				String publicationID = resultSet.getString("PublicationID");
 				String customerID = resultSet.getString("CustomerId");
 				String orderID = resultSet.getString("OrderId"); // Corrected column name
-				String price = resultSet.getString("Price"); // Corrected column name
-				String invoiceMessage = resultSet.getString("InvoiceMessage");
+				String price = resultSet.getString("InvoiceMessage"); // Corrected column name
+				String invoiceMessage = resultSet.getString("OrderPrice");
 
 				System.out.println("invoiceID: " + invoiceID + ", publicationID: " + publicationID + ", customerID: "
 						+ customerID + ", orderID: " + orderID + // Corrected column name
@@ -607,17 +626,19 @@ public  class MySQLAccess
 		boolean deleteSuccessful = true;
 
 		try {
-			if (connect == null) {
+			if (connect == null || connect.isClosed()) {
 				System.out.println("Connection is null. Cannot delete.");
 				return false;
 			}
 
-			preparedStatement = connect.prepareStatement("DELETE FROM Invoice  WHERE InvoiceID =?");
-			preparedStatement.setString(1, invoiceID);
+			try(PreparedStatement preparedStatement = connect.prepareStatement("DELETE FROM Invoice  WHERE InvoiceID =?")){
+                                                preparedStatement.setString(1, invoiceID);
 			int rowsAffected = preparedStatement.executeUpdate();
 
 			// Check if any rows were affected to determine if the deletion was successful
 			deleteSuccessful = rowsAffected > 0;
+                                            }
+			
 		} catch (Exception e) {
 			deleteSuccessful = false;
 			e.printStackTrace(); // Add proper error handling/logging
@@ -643,7 +664,7 @@ public  class MySQLAccess
 				String publicationID = resultSet.getString("PublicationID");
 				String customerID = resultSet.getString("CustomerId");
 				String orderID = resultSet.getString("orderID");
-				String price = resultSet.getString("Price");
+				String price = resultSet.getString("OrderPrice");
 				String invoiceMessage = resultSet.getString("InvoiceMessage");
 
 				System.out.println("invoiceID: " + invoiceID + ", publicationID: " + publicationID + ", customerID: "

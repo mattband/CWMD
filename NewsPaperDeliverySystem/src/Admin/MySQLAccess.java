@@ -77,7 +77,7 @@ public class MySQLAccess {
                     "INSERT INTO NEWSAGENT VALUES (?, ?)"
             );
             preparedStatement.setString(1, newsagent.getId());
-            preparedStatement.setString(2, newsagent.getPassword());
+            preparedStatement.setString(2, newsagent.getUserId().getUserId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -107,10 +107,10 @@ public class MySQLAccess {
 
 	public boolean updateNewsagent(Newsagent newsagent) {
 		boolean updateSuccessful = true;
-                String sql = "UPDATE NEWSAGENT SET AGENTID = ? , AGENTPASSWORD = ? WHERE AGENTID = ?";
+                String sql = "UPDATE NEWSAGENT SET AGENTID = ? , USERID = ? WHERE AGENTID = ?";
 		try(PreparedStatement preparedStatement = connect.prepareStatement(sql)){
 			preparedStatement.setString(1, newsagent.getId());
-			preparedStatement.setString(2, newsagent.getPassword());
+			preparedStatement.setString(2, newsagent.getUserId().getUserId());
 			preparedStatement.setString(3, newsagent.getId());
                         
 			

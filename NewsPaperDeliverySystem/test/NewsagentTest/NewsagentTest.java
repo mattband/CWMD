@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
-package Newsagent;
+package NewsagentTest;
 
+import Newsagent.Newsagent;
+import Newsagent.NewsagentExceptionHandler;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import org.junit.After;
@@ -27,7 +25,7 @@ public class NewsagentTest extends TestCase{
 	@Test
 	public void testvalidateNewsagentPassword001() {
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "fires";
 			
 			boolean results = newsagent.validateNewsagentPassword(input);
@@ -45,7 +43,7 @@ public class NewsagentTest extends TestCase{
 	
 	public void testvalidateNewsagentPassword002() {
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentUserId);
 			String input = "aaaaaaaaaaaa";
 			
 			boolean results = newsagent.validateNewsagentPassword(input);
@@ -65,7 +63,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent password NOT specified";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "";
 			
 			newsagent.validateNewsagentPassword(input);
@@ -86,7 +84,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent password does not meet minimum length requirements";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "sad";
 			
 			newsagent.validateNewsagentPassword(input);
@@ -107,7 +105,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent password does not meet maximum length requirements";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "abbreviations";
 			
 			newsagent.validateNewsagentPassword(input);
@@ -128,7 +126,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent password contains non-letter characters";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "=-,#-.+-_}#;";
 			
 			newsagent.validateNewsagentPassword(input);
@@ -149,7 +147,7 @@ public class NewsagentTest extends TestCase{
 	
 	public void testvalidateNewsagentID007() {
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "ggg";
 			
 			boolean results = newsagent.validateNewsagentID(input);
@@ -169,7 +167,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent ID does not meet minimum length requirements";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "12";
 			
 			newsagent.validateNewsagentID(input);
@@ -190,7 +188,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent ID does not meet maximum length requirements";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "12345678";
 			
 			newsagent.validateNewsagentID(input);
@@ -211,7 +209,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent ID NOT specified";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "";
 			
 			newsagent.validateNewsagentID(input);
@@ -232,7 +230,7 @@ public class NewsagentTest extends TestCase{
 		String expectOP = "Newsagent ID should not contain special characters";
 		
 		try {
-			Newsagent newsagent = new Newsagent();
+			Newsagent newsagent = new Newsagent(newsagentIDInput, newAgentId);
 			String input = "++++";
 			
 			newsagent.validateNewsagentID(input);

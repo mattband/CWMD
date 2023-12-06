@@ -3,9 +3,9 @@ package matthew;
 public class Invoice {
 
 	private String invoiceID;
-	private String customerID;
-	private String publicationID; 
-	private String orderID; 
+	private Customer customerID;
+	private Publication publicationID; 
+	private OrderBook orderID; 
 	private String invoiceMessage; 
 	private String price;
 
@@ -25,27 +25,27 @@ public class Invoice {
 		this.invoiceID = invoiceID;
 	}
 
-	public String getCustomerID() {
+	public Customer getCustomerID() {
 		return customerID;
 	}
 
-	public void setCustomerID(String customerID) {
+	public void setCustomerID(Customer customerID) {
 		this.customerID = customerID;
 	}
 
-	public String getPublicationID() {
+	public Publication getPublicationID() {
 		return publicationID;
 	}
 
-	public void setPublicationID(String publicationID) {
+	public void setPublicationID(Publication publicationID) {
 		this.publicationID = publicationID;
 	}
 
-	public String getOrderID() {
+	public OrderBook getOrderID() {
 		return orderID;
 	}
 
-	public void setOrderID(String orderID) {
+	public void OrderBook(OrderBook orderID) {
 		this.orderID = orderID;
 	}
 
@@ -57,11 +57,11 @@ public class Invoice {
 		this.invoiceMessage = invoiceMessage;
 	}
 
-	public Invoice(String invoiceID, String customerID, String publicationID, String orderID, String invoiceMessage,String price) {
+	public Invoice(String invoiceID, Publication insertPublication, Customer insertCustomer, OrderBook orderID, String invoiceMessage, String price) {
 		super();
 		this.invoiceID = invoiceID;
-		this.customerID = customerID;
-		this.publicationID = publicationID;
+		this.publicationID = insertPublication;
+		this.customerID = insertCustomer;
 		this.orderID = orderID;
 		this.invoiceMessage = invoiceMessage;
 		this.price = price;
@@ -79,10 +79,9 @@ public class Invoice {
 
         // Try to parse the publicationID as an integer
         try {
-            int invoiceIDTest = Integer.parseInt(invoiceID);
 
             // Check if the parsed integer is a 5-digit number
-            if (invoiceIDTest < 10000 || invoiceIDTest > 99999) {
+            if (invoiceID.length() < 5|| invoiceID.length() > 5) {
                 throw new NewsAgentExceptionHandler("The invoice ID is invalid. Please enter a correct 5-digit invoice ID.");
             }
 
@@ -98,16 +97,15 @@ public class Invoice {
 	// method that will check if validate that the customerID is valid
 	public static boolean validateCustomerID(String customerID) throws NewsAgentExceptionHandler {
 	    // Check if customerID is empty
-	    if (customerID.isBlank() || customerID.isEmpty()) {
+	    if ( customerID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid customerID.");
 	    }
 
 	    // Try to parse the customerID as an integer
 	    try {
-	        int customerIDTest = Integer.parseInt(customerID);
 
 	        // Check if the parsed integer is a 5-digit number
-	        if (customerIDTest < 10000 || customerIDTest > 99999) {
+	        if (customerID.length() < 5|| customerID.length() > 5) {
 	            throw new NewsAgentExceptionHandler("The customer ID is invalid. Please enter a correct 5-digit customer ID.");
 	        }
 
@@ -130,10 +128,9 @@ public class Invoice {
 
         // Try to parse the publicationID as an integer
         try {
-            int publicationIDTest = Integer.parseInt(publicationID);
 
             // Check if the parsed integer is a 5-digit number
-            if (publicationIDTest < 10000 || publicationIDTest > 99999) {
+            if (publicationID.length() < 5 || publicationID.length() > 5) {
                 throw new NewsAgentExceptionHandler("The publication ID is invalid. Please enter a correct 5-digit publication ID.");
             }
 
@@ -149,16 +146,15 @@ public class Invoice {
 	// method that will check if validate that the orderID is valid
 	public static boolean validateOrderID(String orderID) throws NewsAgentExceptionHandler {
 	    // Check if orderID is empty
-	    if (orderID.isBlank() || orderID.isEmpty()) {
+	    if (orderID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid Order ID.");
 	    }
 
 	    // Try to parse the orderID as an integer
 	    try {
-	        int orderIDTest = Integer.parseInt(orderID);
 
 	        // Check if the parsed integer is a 5-digit number
-	        if (orderIDTest < 10000 || orderIDTest > 99999) {
+	        if (orderID.length() < 5 || orderID.length() > 5) {
 	            throw new NewsAgentExceptionHandler("The Order ID is invalid. Please enter a correct 5-digit Order ID.");
 	        }
 

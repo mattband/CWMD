@@ -1,5 +1,6 @@
 package matthew;
 
+import Login.LoginCommandLine;
 import java.util.Scanner;
 
 /*
@@ -8,12 +9,14 @@ import java.util.Scanner;
  * i will save it somewhere else later.*/
 
 public class InvoicecLine {
-	public static void main(String[] args) throws NewsAgentExceptionHandler {
+	public static void mainMethod() throws NewsAgentExceptionHandler, Exception {
 		generateInvoiceMenu();
 
 	}
 
-	public static void generateInvoiceMenu() throws NewsAgentExceptionHandler {
+	public static void generateInvoiceMenu() throws NewsAgentExceptionHandler, Exception {
+                int input;
+                do{
 		try (Scanner sc = new Scanner(System.in)) {
 			System.out.println("  _____________________________________________________");
 			System.out.println(" /                                                     \\");
@@ -28,7 +31,7 @@ public class InvoicecLine {
 			System.out.println("|                                                       |");
 			System.out.println("\\-------------------------------------------------------/");
 			System.out.print("\nEnter selection from the options above: ");
-			int input = sc.nextInt();
+			input = sc.nextInt();
 			switch (input) {
 
 			case 1:
@@ -48,6 +51,19 @@ public class InvoicecLine {
 					System.out.println("|--------------Please-enter-the-following:--------------|");
 					System.out.print("|\n|  . InvoiceID: ");
 					String cInvoiceIDInput = sc.next();
+                                                                        System.out.print("|\n|  . PublicationID: ");
+					String cPublicationIDInput = sc.next();
+                                                                        Publication insertPublication = new Publication();
+                                                                        insertPublication.setPublicationID(cPublicationIDInput);
+                                                                        
+                                                                        System.out.print("|\n|  . CustomerID: ");
+					String cCustomerIDInput = sc.next();
+                                                                        Customer insertCustomer = new Customer();
+                                                                        insertCustomer.setCustomerID(cCustomerIDInput);
+                                                                        System.out.print("|\n|  . OrderID: ");
+					String cOrderIDInput = sc.next();
+                                                                        OrderBook insertOrder = new OrderBook();
+                                                                        insertOrder.setOrderID(cOrderIDInput);
 					System.out.print("|\n|  . Invoice Message: ");    
 					String cInvoiceMessageInput = sc.next();
 					System.out.print("|\n|  . Price: ");
@@ -57,17 +73,14 @@ public class InvoicecLine {
 					System.out.print("\nGenerating Order Book from the Inputs above: ");
 
 					Invoice.validateinvoiceID(cInvoiceIDInput);
-					String cPublicationIDInput = cInvoiceIDInput;
-					String cCustomerID = cInvoiceIDInput;
-					String cOrderID = cInvoiceIDInput;
 
-					Invoice.validateCustomerID(cCustomerID);
+					Invoice.validateCustomerID(cCustomerIDInput);
 					Invoice.validatePublicationID(cPublicationIDInput);
-					Invoice.validateOrderID(cOrderID);
+					Invoice.validateOrderID(cOrderIDInput);
 					Invoice.validatePrice(cPriceInput);
 					Invoice.validateInvoiceMessage(cInvoiceMessageInput);
 					
-					Invoice inputInvoice = new Invoice(cInvoiceIDInput,cCustomerID,cPublicationIDInput,cOrderID,cInvoiceMessageInput,cPriceInput);
+					Invoice inputInvoice = new Invoice(cInvoiceIDInput , insertPublication,insertCustomer,insertOrder,cInvoiceMessageInput,cPriceInput);
 					try {
 						
 						MySQLAccess sql = new MySQLAccess();
@@ -184,30 +197,37 @@ public class InvoicecLine {
 				System.out.println("|--------------Please-enter-the-Invoice-ID-------------|");
 				System.out.println("|-------and-Details-of-Invoice-you-wish-to-Update------|");	
 				System.out.print("|\n|  . InvoiceID: ");
-				String upInvoiceIDInput = sc.next();
-				System.out.print("|\n|  . Invoice Message: ");    
-				String upInvoiceMessageInput = sc.next();
-				System.out.print("|\n|  . Price: ");
-				String upPriceInput = sc.next();
+                                                          String upInvoiceIDInput = sc.next();
+                                                          System.out.print("|\n|  . PublicationID: ");
+                                                          String cPublicationIDInput = sc.next();
+                                                          Publication upPublicationIDInput = new Publication();
+                                                          upPublicationIDInput.setPublicationID(cPublicationIDInput);
+
+                                                          System.out.print("|\n|  . CustomerID: ");
+                                                          String cCustomerIDInput = sc.next();
+                                                          Customer upCustomerIDInput = new Customer();
+                                                          upCustomerIDInput.setCustomerID(cCustomerIDInput);
+                                                          System.out.print("|\n|  . OrderID: ");
+                                                          String cOrderIDInput = sc.next();
+                                                          OrderBook upOrderIDInput = new OrderBook();
+                                                          upOrderIDInput.setOrderID(cOrderIDInput);
+                                                          System.out.print("|\n|  . Invoice Message: ");    
+                                                          String upInvoiceMessageInput = sc.next();
+                                                          System.out.print("|\n|  . Price: ");
+                                                          String upPriceInput = sc.next();
 				System.out.println("|                                                       ");
 				System.out.println("\\-------------------------------------------------------/");
 				System.out.print("\nGenerating updated invoice from the Inputs above: ");
-
-
-
 				        try {
 							Invoice updateInvoice = new Invoice();
 				            MySQLAccess sql = new MySQLAccess();
 							Invoice.validateinvoiceID(upInvoiceIDInput);
-							String upPublicationIDInput = upInvoiceIDInput;
-							String upCustomerIDInput = upInvoiceIDInput;
-							String upOrderIDInput = upInvoiceIDInput;
-							Invoice.validateCustomerID(upCustomerIDInput);
-							Invoice.validatePublicationID(upPublicationIDInput);
-							Invoice.validateOrderID(upOrderIDInput);
+//							Invoice.validateCustomerID(upCustomerIDInput);
+//							Invoice.validatePublicationID(upPublicationIDInput);
+//							Invoice.validateOrderID(upOrderIDInput);
 							Invoice.validateInvoiceMessage(upInvoiceMessageInput);
 							Invoice.validatePrice(upPriceInput);
-							updateInvoice = new Invoice(upInvoiceIDInput,upCustomerIDInput,upPublicationIDInput,upOrderIDInput,upInvoiceMessageInput,upPriceInput);
+							updateInvoice = new Invoice(upInvoiceIDInput, upPublicationIDInput, upCustomerIDInput, upOrderIDInput, upInvoiceMessageInput,upPriceInput);
 
 				            // Insert an Invoice
 				            sql.updateInvoice(updateInvoice);
@@ -250,63 +270,36 @@ public class InvoicecLine {
 			        String deleteInvoiceInput = sc.next();
 			        System.out.println("|\n|                                                       |");
 			        System.out.println("\\-------------------------------------------------------/");
-			        while (!Invoice.validateinvoiceID(deleteInvoiceInput)) {
-			            try {
-			                // Creating an instance of MySQLAccess
-			                MySQLAccess sql = new MySQLAccess();
+			        if (Invoice.validateinvoiceID(deleteInvoiceInput)) {
+                                                            try {
+                                                                MySQLAccess sql = new MySQLAccess();
+                                                                boolean deleteResult = sql.deleteInvoice(deleteInvoiceInput);
 
-			                // Validate Invoice ID
-			                if (Customer.validateCustomerID(deleteInvoiceInput)) {
-			                    boolean deleteResult = sql.deleteInvoice(deleteInvoiceInput);
-
-			                    if (deleteResult) {
-			                        System.out.println("Invoice deleted successfully.");
-			                    } else {
-			                        System.out.println("Failed to delete Invoice.");
-			                    }
-			                }
-			            } catch (NumberFormatException e) {
-			                System.out.println("Invalid input. Please enter a valid 5-digit Invoice ID.");
-			                // Optionally, you can prompt the user to enter the ID again.
-			                deleteInvoiceInput = sc.next();
-			            } catch (NewsAgentExceptionHandler e) {
-			                System.out.println("Invalid " + e);
-			                generateInvoiceMenu(); // Reprint the menu
-			                System.out.print("\nEnter selection from the options above: ");
-			                afermDelete = sc.nextInt();
-			                if (afermDelete == 2) {
-			                	generateInvoiceMenu();
-			                    break;
-			                } else if (afermDelete != 1) {
-			                    System.out.println("Please enter a valid input on screen.");
-			                }
-			            } catch (Exception e) {
-			                e.printStackTrace();
-			            }
-			        }
-			    } else if (afermDelete == 2) {
-			    	generateInvoiceMenu();
-			    } else {
-			        System.out.println("Please enter a valid input on screen.");
-			    }
+                                                                if (deleteResult) {
+                                                                    System.out.println("Invoice deleted successfully.");
+                                                                } else {
+                                                                    System.out.println("Failed to delete Invoice.");
+                                                                }
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        } else {
+                                                            System.out.println("Invalid Invoice ID. Please enter a valid ID.");
+                                                        }
+                                                    } else if (afermDelete == 2) {
+                                                        generateInvoiceMenu();
+                                                    } else {
+                                                        System.out.println("Please enter a valid input on screen.");
+                                                    }
 			    break;
 
 
 			default:
-				System.out.println("  _____________________________________________________");
-				System.out.println(" /                                                     \\");
-				System.out.println("|--------------Something-has-gone-wrong-----------------|");
-				System.out.println("|----------Please-exit-to-the-previous-panel------------|");
-				System.out.println("|  1. Exit                                              |");
-				System.out.println("\\-------------------------------------------------------/");
-				int exit = sc.nextInt();
-				if(exit == 1) {
-					generateInvoiceMenu();
-				} else
-					System.out.println("please enter a valid input on screen.");
-
+                                                        LoginCommandLine.mainMethod();
+				break;
 			}
 		}
+                }while(input!= 6);
 
 	}
 

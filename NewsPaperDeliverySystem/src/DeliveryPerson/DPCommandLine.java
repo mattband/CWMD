@@ -5,6 +5,7 @@
 package DeliveryPerson;
 
 import DeliveryDocket.DeliveryDocket;
+import Login.LoginCommandLine;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -31,8 +32,8 @@ public class DPCommandLine {
             try{
                 while(resultSet.next()){
                     count++;
-                    int deliveryDocketId = resultSet.getInt("DELIVERYDOCKETID");
-                    int publicationId = resultSet.getInt("PUBLICATIONID");
+                    String deliveryDocketId = resultSet.getString("DELIVERYDOCKETID");
+                    String publicationId = resultSet.getString("PUBLICATIONID");
                     String customerId = resultSet.getString("CUSTOMERID");
                     String orderId = resultSet.getString("ORDERID");
                     String deliveryStatus = resultSet.getString("DELIVERYSTATUS");
@@ -49,7 +50,8 @@ public class DPCommandLine {
             }
         }
          
-        public static void main(String[] args) throws SQLException {
+         //show in the main
+        public static void mainMethod() throws SQLException, Exception {
             DBHelper dbhelper = new DBHelper();
             int choice;
             do{
@@ -72,13 +74,13 @@ public class DPCommandLine {
 
                             while (resultSet2.next()) {
                                 count++;
-                                int idToDisplay = resultSet2.getInt("DELIVERYDOCKETID");
+                                String idToDisplay = resultSet2.getString("DELIVERYDOCKETID");
                                 String deliveryStatus = resultSet2.getString("DELIVERYSTATUS");
                                 System.out.println(" " + idToDisplay + "- " + deliveryStatus);
                             }
                             System.out.println("=======");
                             System.out.print("Enter id: ");
-                            int docketId = update.nextInt();
+                            String docketId = update.next();
                             
                             System.out.print("Enter new delivery status: ");
                             String newStatus = update.next();
@@ -97,6 +99,8 @@ public class DPCommandLine {
                             }
                             
                         break;
+                    case 3:
+                        LoginCommandLine.mainMethod();
                 }
             }while(choice != 3);
 

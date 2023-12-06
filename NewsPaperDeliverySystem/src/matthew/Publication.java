@@ -8,6 +8,10 @@ public class Publication {
 	private String Quantity; // 1 or 2 numeric value in lenght
 	private String Frequency; // 5- 20 in length
 
+                public Publication(String publicationId){
+                        this.publicationID = publicationId;
+                }
+                
 	public String getTitle() {
 		return title;
 	}
@@ -72,13 +76,10 @@ public class Publication {
         if (publicationID.isEmpty()) {
             throw new NewsAgentExceptionHandler("Please enter a valid publicationID.");
         }
-
-        // Try to parse the publicationID as an integer
         try {
-            int publicationIDTest = Integer.parseInt(publicationID);
 
             // Check if the parsed integer is a 5-digit number
-            if (publicationIDTest < 10000 || publicationIDTest > 99999) {
+            if (publicationID.length() < 5 || publicationID.length() > 5) {
                 throw new NewsAgentExceptionHandler("The publication ID is invalid. Please enter a correct 5-digit publication ID.");
             }
 
@@ -98,12 +99,10 @@ public class Publication {
             throw new NewsAgentExceptionHandler("Please enter a valid Price.");
         }
 
-        // Try to parse the Price as a double
         try {
-            double priceTest = Double.parseDouble(price);
 
             // Check if the parsed double is in the valid range
-            if (priceTest < 1.00 || priceTest > 99.99) {
+            if (price.length() < 1 || price.length() > 5) {
                 throw new NewsAgentExceptionHandler("The Price is invalid. Please enter a correct Price between 1.00 and 99.99.");
             }
 

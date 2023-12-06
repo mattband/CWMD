@@ -1,18 +1,18 @@
 package Admin;
 
 import junit.framework.TestCase;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
- * @author cianf
+ * @author User
  */
 public class AdminTest extends TestCase{
-    
    //Testing adminUsername
 	
 	//Test #: 1
@@ -69,6 +69,7 @@ public class AdminTest extends TestCase{
 		} catch (NewsagentExceptionHandler e) {
 			assertEquals(e.getMessage(), expectOP );
 
+
 		}
 	}
 	
@@ -89,7 +90,6 @@ public class AdminTest extends TestCase{
 			
 		} catch (NewsagentExceptionHandler e) {
 			assertEquals(e.getMessage(), expectOP );
-
 		}
 	}
 	
@@ -382,4 +382,21 @@ public class AdminTest extends TestCase{
 		}
 	}
 
+           /**
+     * Test of validateAdminPassword method, of class Admin.
+     */
+    @Test
+    public void testValidateAdminPassword() throws Exception {
+        System.out.println("validateAdminPassword");
+        String adminPassword = "";
+        Admin instance = new Admin();
+        boolean expResult = false;
+        boolean result = instance.validateAdminPassword(adminPassword);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }
+ 
+    
+

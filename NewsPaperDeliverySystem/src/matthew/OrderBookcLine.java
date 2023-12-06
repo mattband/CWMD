@@ -1,5 +1,6 @@
 package matthew;
 
+import Login.LoginCommandLine;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,12 +10,14 @@ import java.util.Scanner;
  * i will save it somewhere else later.*/
 
 public class OrderBookcLine {
-	public static void main(String[] args) throws NewsAgentExceptionHandler {
+	public static void mainMethod() throws NewsAgentExceptionHandler, Exception{
 		generateOrderBookMenu();
 
 	}
 
-	public static void generateOrderBookMenu() throws NewsAgentExceptionHandler {
+	public static void generateOrderBookMenu() throws NewsAgentExceptionHandler, Exception {
+                int input;
+                do{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("  _____________________________________________________");
 		System.out.println(" /                                                     \\");
@@ -29,7 +32,7 @@ public class OrderBookcLine {
 		System.out.println("|                                                       |");
 		System.out.println("\\-------------------------------------------------------/");
 		System.out.print("\nEnter selection from the options above: ");
-		int input = sc.nextInt();
+		input = sc.nextInt();
 		switch (input) {
 
 		case 1:
@@ -47,28 +50,30 @@ public class OrderBookcLine {
 				System.out.println("  _____________________________________________________");
 				System.out.println(" /                                                     \\");
 				System.out.println("|--------------Please-enter-the-following:--------------|");
+                                                                System.out.print("|\n|  . Order ID: ");
+				String orderIDInput = sc.next();
+		
 				System.out.print("|\n|  . Customers ID: ");
 				String customerIDInput = sc.next();
 				System.out.print("|\n|  . Publication ID: ");
 				String publicationIDInput = sc.next();
-				System.out.print("|\n|  . Order Shedule: ");
-				String orderSheduleInput = sc.next();
 				System.out.print("|\n|  . Order Price: ");
 				String orderPriceInput = sc.next();
+				System.out.print("|\n|  . Order Schedule: ");
+				String orderScheduleInput = sc.next();
 				System.out.println("|                                                       ");
 				System.out.println("\\-------------------------------------------------------/");
 				System.out.print("\nGenerating Order Book from the Inputs above: ");
 				Random random = new Random(System.currentTimeMillis());
 				int orderIDint = ((1 + random.nextInt(2)) * 10000 + random.nextInt(10000));
-				String orderIDinput = Integer.toString(orderIDint);
-				OrderBook.validateOrderID(orderIDinput);
+				OrderBook.validateOrderID(orderIDInput);
 				OrderBook.validateCustomerID(customerIDInput);
 				OrderBook.validatePublicationID(publicationIDInput);
 				OrderBook.validateOrderPrice(orderPriceInput);
-				OrderBook.validateOrderShedule(orderSheduleInput);
+				OrderBook.validateOrderShedule(orderScheduleInput);
 				OrderBook.validateCustomerAndPublicationSame(customerIDInput, publicationIDInput);
-				OrderBook inputOrderBook = new OrderBook(orderIDinput, customerIDInput, publicationIDInput,
-						orderSheduleInput, orderPriceInput);
+				OrderBook inputOrderBook = new OrderBook(orderIDInput,customerIDInput,publicationIDInput,orderPriceInput,orderScheduleInput);
+
 				try {
 
 					MySQLAccess sql = new MySQLAccess();
@@ -275,19 +280,12 @@ public class OrderBookcLine {
 			break;
 
 		default:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Something-has-gone-wrong-----------------|");
-			System.out.println("|----------Please-exit-to-the-previous-panel------------|");
-			System.out.println("|  1. Exit                                              |");
-			System.out.println("\\-------------------------------------------------------/");
-			int exit = sc.nextInt();
-			if (exit == 1) {
-				generateOrderBookMenu();
-			} else
-				System.out.println("please enter a valid input on screen.");
+                                            LoginCommandLine.mainMethod();
+			break;
 
 		}
+                
+                }while(input != 6);
 
 	}
 

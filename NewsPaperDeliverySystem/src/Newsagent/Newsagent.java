@@ -4,6 +4,7 @@
  */
 package Newsagent;
 
+import User.User;
 import java.util.Scanner;
 
 /**
@@ -15,34 +16,34 @@ public class Newsagent {
 	// CONSTANTS 
 //	private final int MIN_USERNAME_LENGTH = 3;
 //	private final int MAX_USERNAME_LENGTH = 60;
-
-	private final int MIN_PASSWORD_LENGTH = 5;
-	private final int MAX_PASSWORD_LENGTH = 12;
-	
-	private final int MIN_ID_LENGTH = 3;
-	private final int MAX_ID_LENGTH = 5;
+//
+//	private final int MIN_PASSWORD_LENGTH = 5;
+//	private final int MAX_PASSWORD_LENGTH = 12;
+//	
+//	private final int MIN_ID_LENGTH = 3;
+//	private final int MAX_ID_LENGTH = 5;
 	
 	// instance vars
 //	private String username;
-	private String password;
+	private User userId;
 	private String id;
+              private User newsAgentpassword;
 
-	public Newsagent(String newsagentId, String newsagentPassword) throws NewsagentExceptionHandler {
+	public Newsagent(String newsagentId, User userId) throws NewsagentExceptionHandler {
 		try {
 			validateNewsagentID(newsagentId);
-			validateNewsagentPassword(newsagentPassword);
 		}catch(NewsagentExceptionHandler  e) {
 			throw e;
 		}
 		
 		this.id = newsagentId;
-		this.password = newsagentPassword;
+		this.userId = userId;
 		
 	}
-	
-	public Newsagent() throws NewsagentExceptionHandler {
-		
-	}
+
+    public Newsagent() {
+      
+    }
 	
 	//Newsagent username string must be a minimum of 3 characters and a maximum of 60 characters
 
@@ -63,19 +64,19 @@ public class Newsagent {
 		
 		//Newsagent password string must be a minimum of 5 characters and a maximum of 12 characters
 
-		public boolean validateNewsagentPassword(String newsagentPassword) throws NewsagentExceptionHandler {
+		public boolean validateNewsagentPassword(String newsAgentUserId) throws NewsagentExceptionHandler {
 			
-			if (newsagentPassword.isEmpty() || newsagentPassword.isEmpty()) 
+			if (newsAgentUserId.isEmpty()) 
 				throw new NewsagentExceptionHandler ("Newsagent password NOT specified");
-			else if (newsagentPassword.length() < MIN_PASSWORD_LENGTH)
+			else if (newsAgentUserId.length() < 5)
 				throw new NewsagentExceptionHandler ("Newsagent password does not meet minimum length requirements");
-			else if (newsagentPassword.length() > MAX_PASSWORD_LENGTH)
+			else if (newsAgentUserId.length() > 5)
 				throw new NewsagentExceptionHandler ("Newsagent password does not meet maximum length requirements");
 			
-			if (!newsagentPassword.matches("[a-zA-Z]+")) {
-		        throw new NewsagentExceptionHandler ("Newsagent password contains non-letter characters");
-		    }
-			return newsagentPassword.length() >= MIN_PASSWORD_LENGTH && newsagentPassword.length() <= MAX_PASSWORD_LENGTH ;	
+//			if (!newsAgentUserId.matches("[a-zA-Z]+")) {
+//		        throw new NewsagentExceptionHandler ("Newsagent password contains non-letter characters");
+//		    }
+			return newsAgentUserId.length() == 6 ;	
 		}
 
 //		
@@ -87,12 +88,12 @@ public class Newsagent {
 //			this.username = username;
 //		}
 
-		public String getPassword() {
-			return password;
+		public User getUserId() {
+			return userId;
 		}
 
-		public void setPassword(String password) {
-			this.password = password;
+		public void setUserId(User userId) {
+			this.userId = userId;
 		}
 
 		public String getId() {
@@ -108,15 +109,12 @@ public class Newsagent {
 			
 			if (idNum.isEmpty() || idNum.isEmpty()) 
 				throw new NewsagentExceptionHandler ("Newsagent ID NOT specified");
-			else if (idNum.length() < MIN_ID_LENGTH)
+			else if (idNum.length() < 6)
 				throw new NewsagentExceptionHandler ("Newsagent ID does not meet minimum length requirements");
-			else if (idNum.length() > MAX_ID_LENGTH)
+			else if (idNum.length() > 6)
 				throw new NewsagentExceptionHandler ("Newsagent ID does not meet maximum length requirements");
 			
-                        if (!idNum.matches("^[0-9]+$")) {
-                            throw new NewsagentExceptionHandler("Newsagent ID should contain only numbers");
-                        }
-			return idNum.length() >= MIN_ID_LENGTH && idNum.length() <= MAX_ID_LENGTH ;
+			return idNum.length() == 6 ;
 		}
                 
                 public  boolean createNewsagent(Newsagent newsagent) throws NewsagentExceptionHandler

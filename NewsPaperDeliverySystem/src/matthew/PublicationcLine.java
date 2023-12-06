@@ -6,12 +6,14 @@ import java.util.Scanner;
 
 
 public class PublicationcLine {
-	public static void main(String[] args) throws NewsAgentExceptionHandler {
+	public static void mainMethod() throws NewsAgentExceptionHandler, Exception {
 		generatePublicationMenu();
 
 	}
 
-	public static void generatePublicationMenu() throws NewsAgentExceptionHandler {
+	public static void generatePublicationMenu() throws NewsAgentExceptionHandler, Exception {
+                int input;
+                do{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("  _____________________________________________________");
 		System.out.println(" /                                                     \\");
@@ -26,7 +28,7 @@ public class PublicationcLine {
 		System.out.println("|                                                       |");
 		System.out.println("\\-------------------------------------------------------/");
 		System.out.print("\nEnter selection from the options above: ");
-		int input = sc.nextInt();
+		input = sc.nextInt();
 		switch (input) {
 
 		case 1:
@@ -48,9 +50,9 @@ public class PublicationcLine {
 				String cPublicationIDInput = sc.next();
 				System.out.print("|\n|  . Title: ");
 				String cTitleInput = sc.next();
-				System.out.print("|\n|  . Price: ");
+				System.out.print("|\n|  . Price:");
 				String cPriceInput = sc.next();
-				System.out.print("|\n|  . Quanity: ");
+				System.out.print("|\n|  . Quanity:");
 				String cQuanityInput = sc.next();
 				System.out.print("|\n|  . Frequncey: ");
 				String cFrequnceyInput = sc.next();
@@ -269,19 +271,11 @@ public class PublicationcLine {
 			break;
 
 		default:
-			System.out.println("  _____________________________________________________");
-			System.out.println(" /                                                     \\");
-			System.out.println("|--------------Something-has-gone-wrong-----------------|");
-			System.out.println("|----------Please-exit-to-the-previous-panel------------|");
-			System.out.println("|  1. Exit                                              |");
-			System.out.println("\\-------------------------------------------------------/");
-			int exit = sc.nextInt();
-			if (exit == 1) {
-				generatePublicationMenu();
-			} else
-				System.out.println("please enter a valid input on screen.");
+			Login.LoginCommandLine.mainMethod();
+                                            break;
 
 		}
+                }while(input != 6);
 
 	}
 

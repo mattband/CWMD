@@ -12,9 +12,13 @@ public class Customer {
 	// initializing variables
 	private String customerID; // length 5
 	private String customerName; // length 1 - 20
-	private String addressID; // same as customer ID
+	private String addressStreet; // same as customer ID
 	private String phoneNumber;// length 10
-	private String PublicationID; // same as customerid
+	private Publication publicationID; // same as customerid
+
+                public Customer(String customerId) {
+                        this.customerID = customerId;
+                }
 
 	// getters and setters for all variables within the customer class.
 	public String getCustomerID() {
@@ -33,12 +37,12 @@ public class Customer {
 		this.customerName = customerName;
 	}
 
-	public String getAddressID() {
-		return addressID;
+	public String getAddressStreet() {
+		return addressStreet;
 	}
 
-	public void setAddressID(String addressID) {
-		this.addressID = addressID;
+	public void setAddressStreet(String addressStreet) {
+		this.addressStreet = addressStreet;
 	}
 
 	public String getPhoneNumber() {
@@ -49,24 +53,24 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getPublicationID() {
-		return PublicationID;
+	public Publication getPublicationID() {
+		return publicationID;
 	}
 
-	public void setPublicationID(String publicationID) {
-		PublicationID = publicationID;
+	public void setPublicationID(Publication PublicationID) {
+		publicationID = PublicationID;
 	}
 
 	// constructor for cerating customer and validating that all elements are
 	// legal.
-	public Customer(String customerID, String customerName, String addressID, String phoneNumber,
-			String publicationID) {
+	public Customer(String customerID, String customerName, String addressStreet, String phoneNumber,
+			Publication PublicationID) {
 		super();
 		this.customerID = customerID;
 		this.customerName = customerName;
-		this.addressID = addressID;
+		this.addressStreet = addressStreet;
 		this.phoneNumber = phoneNumber;
-		PublicationID = publicationID;
+		publicationID = PublicationID;
 	}
 
 	// empty constructor
@@ -80,25 +84,21 @@ public class Customer {
 		if (customerID.isEmpty()) {
 			throw new NewsAgentExceptionHandler("Please enter a valid customerID.");
 		}
+	    // Try to parse the customerID as an integer
+	    try {
 
-		// Try to parse the customerID as an integer
-		try {
-			int customerIDTest = Integer.parseInt(customerID);
-
-			// Check if the parsed integer is a 5-digit number
-			if (customerIDTest < 10000 || customerIDTest > 99999) {
-				throw new NewsAgentExceptionHandler(
-						"The customer ID is invalid. Please enter a correct 5-digit customer ID.");
-			}
+	        // Check if the parsed integer is a 5-digit number
+	        if (customerID.length() < 5 || customerID.length() > 5) {
+	            throw new NewsAgentExceptionHandler("The customer ID is invalid. Please enter a valid range.");
+	        }
 
 		} catch (NumberFormatException e) {
 			// Handle the case where customerID is not a valid integer
 			throw new NewsAgentExceptionHandler(
 					"The customer ID is not a valid integer. Please enter a correct 5-digit customer ID.");
 		}
-
-		// Returning true if the customerID is within the valid ranges
-		return customerID.length() == 5;
+	    // Returning true if the customerID is within the valid ranges
+	    return customerID.length() < 5;
 	}
 
 	// method that will check if validate that the publicationID is valid
@@ -107,16 +107,12 @@ public class Customer {
 		if (publicationID.isEmpty()) {
 			throw new NewsAgentExceptionHandler("Please enter a valid publicationID.");
 		}
-
-		// Try to parse the publicationID as an integer
-		try {
-			int publicationIDTest = Integer.parseInt(publicationID);
-
-			// Check if the parsed integer is a 5-digit number
-			if (publicationIDTest < 10000 || publicationIDTest > 99999) {
-				throw new NewsAgentExceptionHandler(
-						"The publication ID is invalid. Please enter a correct 5-digit publication ID.");
-			}
+	    // Try to parse the publicationID as an integer
+	    try {
+	        // Check if the parsed integer is a 5-digit number
+	        if (publicationID.length() < 5 || publicationID.length() > 5) {
+	            throw new NewsAgentExceptionHandler("The publication ID is invalid. Please enter a correct 5-digit publication ID.");
+	        }
 
 		} catch (NumberFormatException e) {
 			// Handle the case where publicationID is not a valid integer
@@ -166,32 +162,29 @@ public class Customer {
 		// Returning true if the phoneNumber is valid
 		return true;
 	}
+	
+	// method that will check if validate that the addressID is valid	
+	public static boolean validateAddressID(String addressStreet) throws NewsAgentExceptionHandler {
+	    // Check if addressID is empty
+	    if (addressStreet.isEmpty()) {
+	        throw new NewsAgentExceptionHandler("Please enter a valid addressID.");
+	    }
 
-	// method that will check if validate that the addressID is valid
-	public static boolean validateAddressID(String addressID) throws NewsAgentExceptionHandler {
-		// Check if addressID is empty
-		if (addressID.isEmpty()) {
-			throw new NewsAgentExceptionHandler("Please enter a valid addressID.");
-		}
+	    // Try to parse the addressID as an integer
+	    try {
 
-		// Try to parse the addressID as an integer
-		try {
-			int addressIDTest = Integer.parseInt(addressID);
-
-			// Check if the parsed integer is a 5-digit number
-			if (addressIDTest < 10000 || addressIDTest > 99999) {
-				throw new NewsAgentExceptionHandler(
-						"The address ID is invalid. Please enter a correct 5-digit address ID.");
-			}
+	        // Check if the parsed integer is a 5-digit number
+	        if (addressStreet.length() < 0) {
+	            throw new NewsAgentExceptionHandler("The address ID is invalid. Please enter a correct 5-digit address ID.");
+	        }
 
 		} catch (NumberFormatException e) {
 			// Handle the case where customerID is not a valid integer
 			throw new NewsAgentExceptionHandler(
 					"The address ID is not a valid integer. Please enter a correct 5-digit address ID.");
 		}
-
-		// Returning true if the addressID is within the valid ranges
-		return addressID.length() == 5;
+	    // Returning true if the addressID is within the valid ranges
+	    return addressStreet.length() > 0;
 	}
 
 }
