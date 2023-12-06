@@ -17,7 +17,9 @@ public class OrderBook {
 	private String publicationID;
 	private String orderSchedule;
 
-
+                public OrderBook(String orderId){
+                    this.orderID = orderId;
+                }
 
 	// getters and setters for all variables within the orderbook class.
 	public String getOrderID() {
@@ -65,15 +67,15 @@ public class OrderBook {
 
 	// constructor for cerating order book and validating that all elements are
 	// legal.
-	public OrderBook(String orderID, String customerID, String publicationID, String orderShedule,String orderPrice)
+	public OrderBook(String orderID, String customerID, String publicationID, String orderPrice, String orderSchedule)
 			throws NewsAgentExceptionHandler {
 		
 		
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.publicationID = publicationID;
-		this.orderSchedule = orderShedule;
-		this.orderPrice = orderPrice;
+		this.orderSchedule = orderPrice;
+		this.orderPrice = orderSchedule;
 	}
 
 	// empty constructor
@@ -85,16 +87,15 @@ public class OrderBook {
 	// method that will check if validate that the orderID is valid
 	public static boolean validateOrderID(String orderID) throws NewsAgentExceptionHandler {
 	    // Check if orderID is empty
-	    if (orderID.isBlank() || orderID.isEmpty()) {
+	    if (orderID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid Order ID.");
 	    }
 
 	    // Try to parse the orderID as an integer
 	    try {
-	        int orderIDTest = Integer.parseInt(orderID);
 
 	        // Check if the parsed integer is a 5-digit number
-	        if (orderIDTest < 10000 || orderIDTest > 99999) {
+	        if (orderID.length() < 5 || orderID.length() > 5) {
 	            throw new NewsAgentExceptionHandler("The Order ID is invalid. Please enter a correct 5-digit Order ID.");
 	        }
 
@@ -110,16 +111,15 @@ public class OrderBook {
 	// method that will check if validate that the customerID is valid
 	public static boolean validateCustomerID(String customerID) throws NewsAgentExceptionHandler {
 	    // Check if customerID is empty
-	    if (customerID.isBlank() || customerID.isEmpty()) {
+	    if (customerID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid customerID.");
 	    }
 
 	    // Try to parse the customerID as an integer
 	    try {
-	        int customerIDTest = Integer.parseInt(customerID);
 
 	        // Check if the parsed integer is a 5-digit number
-	        if (customerIDTest < 10000 || customerIDTest > 99999) {
+	        if (customerID.length() < 5|| customerID.length() > 5) {
 	            throw new NewsAgentExceptionHandler("The customer ID is invalid. Please enter a correct 5-digit customer ID.");
 	        }
 
@@ -136,16 +136,15 @@ public class OrderBook {
 	// method that will check if validate that the publicationID is valid	
 	public static boolean validatePublicationID(String publicationID) throws NewsAgentExceptionHandler {
 	    // Check if publicationID is empty
-	    if (publicationID.isBlank() || publicationID.isEmpty()) {
+	    if (publicationID.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid publicationID.");
 	    }
 
 	    // Try to parse the publicationID as an integer
 	    try {
-	        int publicationIDTest = Integer.parseInt(publicationID);
 
 	        // Check if the parsed integer is a 5-digit number
-	        if (publicationIDTest < 10000 || publicationIDTest > 99999) {
+	        if (publicationID.length() < 5|| publicationID.length() > 5) {
 	            throw new NewsAgentExceptionHandler("The publication ID is invalid. Please enter a correct 5-digit publication ID.");
 	        }
 
@@ -162,16 +161,15 @@ public class OrderBook {
 	// method that will check if validate that the orderPrice is valid
 	public static boolean validateOrderPrice(String orderPrice) throws NewsAgentExceptionHandler {
 	    // Check if orderPrice is empty
-	    if (orderPrice.isBlank() || orderPrice.isEmpty()) {
+	    if (orderPrice.isEmpty()) {
 	        throw new NewsAgentExceptionHandler("Please enter a valid order Price.");
 	    }
 
 	    // Try to parse the orderPrice as an double
 	    try {
-	        double orderPriceTest = Double.parseDouble(orderPrice);
 
 	        // Check if the parsed integer is a 5-digit number
-	        if (orderPriceTest < 1.00 || orderPriceTest > 99.00) {
+	        if (orderPrice.length() < 1 || orderPrice.length() > 3) {
 	            throw new NewsAgentExceptionHandler("The order Price is invalid. Please enter a correct 5-digit order Price.");
 	        }
 
@@ -187,11 +185,11 @@ public class OrderBook {
 	// method that will check if validate that the orderShedule is valid
 	public static boolean validateOrderShedule(String orderShedule) throws NewsAgentExceptionHandler {
 		// checks if orderShedule is empty or null.
-		if (orderShedule.isBlank() || orderShedule.isEmpty()) {
+		if ( orderShedule.isEmpty()) {
 			throw new NewsAgentExceptionHandler("OrderShedule Needed...");
 		}
 		// checks if orderShedule length is below range.
-		if (orderShedule.length() < 15) {
+		if (orderShedule.length() < 5) {
 			throw new NewsAgentExceptionHandler(
 					"Please enter a correct time and date for the delivery within 15 to 50 characters");
 		}
